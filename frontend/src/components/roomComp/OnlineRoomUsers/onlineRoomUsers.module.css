@@ -1,0 +1,243 @@
+.topRoom{
+    position: relative;
+    transition: width 0.5s ease-in-out;
+}
+.room{
+    position: fixed;
+    top: 80px;
+    left: 0px;
+    background: #1d1d1d;
+    width: 12%;
+    height: 100%;
+    /* padding-top: 20px; */
+}
+
+.burger{
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    font-size: 20px;
+    display: flex;
+    justify-content: flex-end;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+
+}
+
+.close{
+display: none;
+justify-content: flex-end;
+font-weight:800;
+font-size: 20px;
+border-radius: 50%;
+transition: all 0.5s ease-in-out;
+cursor: pointer;
+padding-top: 10px;
+padding-right: 25px;
+color: red;
+}
+
+
+
+.goBack {
+    width: 100%;
+    /* padding:  1rem; */
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.goBack span {
+    /* margin-left: 0.5rem; */
+    font-weight: bold;
+    color: #fff;
+    font-size: 13px;
+    position: relative;
+}
+
+
+
+.header{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.header span::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #0077ff;
+    border-radius: 10px;
+}
+
+.actionBtn {
+    background: #262626;
+    width: 100%;
+    outline: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+    padding: 0.7rem 0.5rem;
+    border-radius: 5px;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.actionBtn:hover {
+    background: #333333;
+    cursor: pointer;
+}
+
+.actionBtn span {
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+.clientsWrap {
+    background: #1d1d1d;
+    width: 100%;
+
+    padding-top: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.topic {
+    width: 100%;
+    margin-left: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: darkgrey;
+}
+
+.online{
+    width: 100%;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    margin-left: 10px;
+    margin-top: 2rem;
+    }
+
+.clientsList {
+    width: 95%;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.client {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.userHead {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 3px solid #056e17;
+    position: relative;
+}
+
+.userHead + h4 {
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+.userAvatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+
+.micBtn {
+    background: #212121;
+    position: absolute;
+    bottom: -10px;
+    right: -5px;
+    width: 15px;
+    height: 15px;
+    box-sizing: content-box;
+    border-radius: 30px;
+    padding: 5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+
+
+.micImg {
+}
+
+
+
+@media screen and (max-width: 1100px) {
+    .close{
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 10px;
+        padding-right: 25px;
+        font-weight: bold;
+        font-size: 20px;
+        border-radius: 50%;
+        transition: all 0.5s ease-in-out;
+        cursor: pointer;
+        color: red;
+    }
+
+    /* .topRoom{
+        position: relative;
+        width: 200px;
+        transition: all 0.5s ease-in-out;
+    }
+     */
+}
+
+
+@media screen and (max-width: 450px) {
+    .burger{
+        position: absolute;
+        top: -50px;
+        left: 10px;
+        font-size: 20px;
+        display: flex;
+        justify-content: flex-end;
+        transition: all 0.5s ease-in-out;
+        cursor: pointer;
+    }
+
+    
+}
+
+
+

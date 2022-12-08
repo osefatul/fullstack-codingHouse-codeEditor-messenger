@@ -1,0 +1,81 @@
+.navbar {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d6b80e;
+    /* border-radius: 5px; */
+    padding-left: 1rem;
+    height: 50px;
+    background-color: #1d1d1d;
+}
+
+.brandStyle{
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.logoText {
+    font-size: 10px;
+    position: absolute;
+    top: 5px;
+    right: -4.5rem;
+}
+
+
+.logoAvatar{
+    width: 60px;
+    height: 60px;
+    background: none;
+    border-radius: 2px;
+}
+
+
+.logoutButton {
+    color: #fff;
+    background: none;
+    cursor: pointer;
+    border: none;
+    font-size: 22px;
+}
+
+.navRight {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #0077ff;
+    height: 40px;
+    width: 40px;
+}
+
+.avatar:hover{
+    border: 2px solid #217c06;
+}
+
+
+
+
+
+
+@media screen and (max-width: 500px) {
+
+
+    .avatar {
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #0077ff;
+        height: 30px;
+        width: 30px;
+    }
+}
+
