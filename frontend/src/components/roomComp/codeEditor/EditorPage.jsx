@@ -196,6 +196,7 @@ const EditorPage = () => {
                         </div>
                     </div>
                 </div>
+                
                 <div className='iframe'>
                         <iframe
                             id="my_iframe"

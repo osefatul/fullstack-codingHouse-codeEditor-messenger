@@ -4,7 +4,7 @@
 display: flex;
 flex-direction: row;
 max-width: 1600px;
-height: calc(100vh - 80px);
+height: calc(100vh - 72px);
 width: 76%;
 overflow-y: hidden;
 margin: 0 auto;
@@ -16,6 +16,7 @@ display: flex;
 align-items: center;
 flex-wrap: wrap;
 gap: 20px;
+;
 }
 
 .colsWrapper{
@@ -25,19 +26,16 @@ flex-direction: column;
 }
 
 .editorWrap{
-height: calc(100vh - 200px);
 width: 100%;
 overflow-y: auto;
 }
 
-.topWrapEditor{
-height: calc(100vh - 300px);
-}
-
 
 .colsWrapper .iframe{
-background: white;
-width: 100%;
+background-color: gray ;
+height: 420px;
+
+/* border-radius: 25px; */
 /* overflow-y: auto; */
 }
 
@@ -48,7 +46,7 @@ align-items: center;
 justify-content: center;
 height: 30px;
 padding: 5px 0;
-background-color: #1c1e29;
+background-color: #1D1D1D;
 gap: 20px;
 }
 

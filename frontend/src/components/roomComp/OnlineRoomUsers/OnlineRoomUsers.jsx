@@ -6,8 +6,6 @@ import { getRoom } from '../../../http';
 import styles from './onlineRoomUsers.module.css';
 
 
-
-
 function OnlineRoomUsers() {
 
     const user = useSelector((state) => state.auth.user);

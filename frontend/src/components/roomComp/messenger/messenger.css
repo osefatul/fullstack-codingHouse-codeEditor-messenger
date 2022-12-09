@@ -1,18 +1,57 @@
-
-
 .messenger{
-    /* position: fixed;
-    top: 0px;
-    right: 0px;
-    background: #1d1d1d;
-    width: 14%;
-    height: 100vh; */
-
     position: fixed;
-    top: 80px;
+    top: 71px;
     right: 0px;
     background: #1d1d1d;
     width: 14%;
     height: 100%;
-    /* padding-top: 20px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
+
+.messengerWrap{
+    padding: 10px;
+    
+}
+
+.messengerWrap h4{
+    padding-top: 10px;   
+}
+
+.conversation {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    background: #3179b458;
+    padding: 5px;
+    gap: 5px;
+    border-radius: 5px;
+}
+
+.message .user {
+    font-size: 12px;
+    color: gray;
+
+}
+
+.message .text {
+    font-size: 12px;
+    color: rgba(179, 166, 166, 0.998);
+}
+
+.SendingTextWrapper{
+    position: relative;
+}
+
+.SendingTextWrapper .sendingText{
+    position: fixed !important;
+    bottom: 0%;
+    border: 3px solid #164d9a;
+
+}   

@@ -9,11 +9,9 @@ const cookieParser = require('cookie-parser');
 //we are using NODE server where express SERVER also work on this...
 const server = require("http").createServer(app);
 
-
 //SETTING WEB_SOCKET SERVER
 const io = require('socket.io')(server);
-
-
+    
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header(
