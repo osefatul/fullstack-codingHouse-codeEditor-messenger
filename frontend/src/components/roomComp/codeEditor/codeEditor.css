@@ -1,14 +1,14 @@
 
 /* Editor page */
 .mainWrap {
-display: flex;
+/* display: flex;
 flex-direction: row;
 max-width: 1600px;
 height: calc(100vh - 72px);
 width: 76%;
 overflow-y: hidden;
 margin: 0 auto;
-padding: 0 5px;
+padding: 0 5px; */
 }
 
 .clientsList {

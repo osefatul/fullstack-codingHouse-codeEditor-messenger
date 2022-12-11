@@ -5,10 +5,10 @@ import { useParams } from 'react-router-dom';
 import "./messenger.css"
 import {initChatSocket} from "../../../socket/chatSocket"
 import toast from 'react-hot-toast';
+import {BsThreeDotsVertical} from "react-icons/bs"
 
 
-
-function Messenger() {
+function Messenger({setOpen, open}) {
     const user = useSelector((state) => state.auth.user);
     const {id: roomId} = useParams();
     const socket = useRef(null);
@@ -41,36 +41,45 @@ function Messenger() {
 
 
 return (
-    <div className='messenger'>
-        <div className='messengerWrap'>
-            <h4>Live Chat..</h4>
-            <div className='conversation'>
-                <div className='message'>
-                    <p>
-                        <span className='user'>Omar</span>
-                        <span>{}</span>
-                    </p>
 
-                    <p className='text'>
-                        This is my message for our fist conversation...
-                    </p>
+    <div className='topMessengerWrapper'>
+
+        <p className="burger" onClick = {()=> setOpen(!open)}>
+            <BsThreeDotsVertical/>
+        </p>
+        
+        <div className='messenger'>
+            <div className='messengerWrap'>
+                <h4>Live Chat..</h4>
+                <div className='conversation'>
+                    <div className='message'>
+                        <p>
+                            <span className='user'>Omar</span>
+                            <span>{}</span>
+                        </p>
+
+                        <p className='text'>
+                            This is my message for our fist conversation...
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div className='SendingTextWrapper'>
-            <textarea 
-            className='sendingText' 
-            name="" 
-            id="" 
-            cols="30" 
-            rows="5"
-            placeholder='Please enter your your message here...'
-            onChange={ChatHandler}
-            >
-            </textarea>
+            <div className='SendingTextWrapper'>
+                <textarea 
+                className='sendingText' 
+                name="" 
+                id="" 
+                cols="30" 
+                rows="5"
+                placeholder='Please enter your your message here...'
+                onChange={ChatHandler}
+                >
+                </textarea>
+            </div>
         </div>
     </div>
+
 )
 }
 

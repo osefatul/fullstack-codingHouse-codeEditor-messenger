@@ -1,8 +1,53 @@
-
 .room {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+    position: relative;
+    background: #1d1d1d;
+
+}
+
+.leftSide, .rightSide {
+    position: fixed;
+    background: #1d1d1d;
+    width: 15%;
+    height: 100%;
+    top: 4.5rem;
+    z-index: 900;
+}
+
+.leftSide{
+    left: 0px;
+}
+
+.closedLeftSide{
+    position: fixed;
+    background: #1d1d1d;
+    height: 100%;
+    top: 8rem;
+    left: 1rem ;
+    z-index: 900;
+    cursor: pointer;
+}
+
+.closedRightSide{
+    position: fixed;
+    background: #1d1d1d;
+    height: 100%;
+    top: 8rem;
+    right: 1rem ;
+    z-index: 900;
+    cursor: pointer;
+}
+
+.rightSide{
+    right: 0px;
+}
+
+.center {
+    width: 92%;
+    z-index: 10;
+    border-radius: 20px;
 }
