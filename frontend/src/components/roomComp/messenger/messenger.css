@@ -2,6 +2,9 @@
 .topMessengerWrapper{
     position: relative;
     transition: all 0.5s ease-in-out;
+    overflow-y: auto;
+    height: 83%;
+
 }
 
 .burger{
@@ -32,17 +35,21 @@
 
 .messengerWrap{
     padding: 10px;
-    
+    overflow-y: auto;
+    padding-bottom: 30%;
 }
 
 .messengerWrap h4{
-    padding-top: 10px;   
+    padding-top: 10px;
+    overflow-y: auto;
 }
 
 .conversation {
     display: flex;
     flex-direction: column;
     padding-top: 10px;
+    gap: 10px;
+    overflow-y: auto;
 }
 
 .message {
@@ -67,11 +74,15 @@
 
 .SendingTextWrapper{
     position: relative;
+    width: 40%;
+
 }
 
 .SendingTextWrapper .sendingText{
     position: fixed !important;
     bottom: 0%;
+    right: 1%;
     border: 3px solid #164d9a;
-
+    width: 13%;
+    height: 10%;
 }   

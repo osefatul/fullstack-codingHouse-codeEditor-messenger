@@ -6,7 +6,7 @@ import "./messenger.css"
 import {initChatSocket} from "../../../socket/chatSocket"
 import toast from 'react-hot-toast';
 import {BsThreeDotsVertical} from "react-icons/bs"
-import { updateRoom } from '../../../http';
+import { getRoom, updateRoom } from '../../../http';
 
 
 function Messenger({setOpen, open}) {
@@ -44,6 +44,7 @@ function Messenger({setOpen, open}) {
     const handleInputEnter = (e) => {
         if (e.code === 'Enter') {
             submitMessage(e)
+            setNewMessage(" ")
         }
     };
 
@@ -65,28 +66,55 @@ function Messenger({setOpen, open}) {
 
         init();
 
+
+        const fetchRoom = async () => {
+            const { data } = await getRoom(roomId);
+            setMessages(data.conversation);
+            console.log(data)
+            messageRef.current?.scrollIntoView({ behavior: "smooth" });
+        };
+
+        fetchRoom();
+
     },[])
 
 
     useEffect(() => {
         socket?.current?.on("RECEIVE_MESSAGE", (message) =>{
             console.log("Message received", message)
+            const fetchRoom = async () => {
+                const { data } = await getRoom(roomId);
+                setMessages(data.conversation);
+                messageRef.current?.scrollIntoView({ behavior: "smooth" });
+                console.log(data)
+            };
+            fetchRoom();
         })
     },[socket.current, socket])
 
 
+      // Always scroll to last Message
+    useEffect(()=> {
+    messageRef.current?.scrollIntoView({ behavior: "smooth" });
+    },[])
+
 return (
 
-    <div className='topMessengerWrapper'>
+    <div className='topMessengerWrapper' 
+        ref={messageRef}
+    >
 
         <p className="burger" onClick = {()=> setOpen(!open)}>
             <BsThreeDotsVertical/>
         </p>
         
-        <div className='messenger'>
+        <div className='messenger'
+            // ref={messageRef}
+        >
             <div className='messengerWrap'>
                 <h4>Live Chat..</h4>
                 <div className='conversation'>
+
                     <div className='message'>
                         <p>
                             <span className='user'>Omar</span>
@@ -97,22 +125,31 @@ return (
                             This is my message for our fist conversation...
                         </p>
                     </div>
+
+                    {messages?.map((message) =>(
+                        <div className='message'>
+                            <p>
+                                <span className='user'>{message.sender}</span>
+                                {/* <span>{new Date(message.msgAt)}</span> */}
+                            </p>
+
+                            <p className='text'>
+                                {message.message}
+                            </p>
+                        </div>
+
+                    ))}
                 </div>
             </div>
 
             <div className='SendingTextWrapper'>
                 <textarea 
                 className='sendingText' 
-                name="" 
-                id="" 
-                cols="30" 
-                rows="5"
                 placeholder='Please enter your your message here...'
                 onChange={ChatHandler}
                 value={newMessage}
-                ref={messageRef}
+                // ref={messageRef}
                 onKeyUp={handleInputEnter}
-
                 >
                 </textarea>
             </div>

@@ -5,9 +5,7 @@ import EditorPage from '../../components/roomComp/codeEditor/EditorPage'
 import Messenger from '../../components/roomComp/messenger/Messenger';
 import OnlineRoomUsers from '../../components/roomComp/OnlineRoomUsers/OnlineRoomUsers';
 import {GiHamburgerMenu} from "react-icons/gi"
-
 import "./room.css"
-
 
 
 
@@ -16,8 +14,6 @@ function Room() {
     const { id: roomId } = useParams();
     const [leftOpen, setLeftOpen] = useState(true);
     const [rightOpen, setRightOpen] = useState(true);
-
-
 
 
 
