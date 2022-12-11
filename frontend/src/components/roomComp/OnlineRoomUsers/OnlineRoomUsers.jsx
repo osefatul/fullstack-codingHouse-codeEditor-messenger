@@ -43,16 +43,7 @@ function OnlineRoomUsers({setOpen, open}) {
         setMuted((prev) => !prev);
     };
 
-    useEffect(()=>{
-        if(window.innerWidth > 1100) {
-            setOpen(true)
-        } else{
-            setOpen(false)
-        }
-    },[])
-
     return (
-
     <div className={styles.topRoom}>
 
         <p className={styles.burger} onClick = {()=> setOpen(!open)}>
@@ -60,11 +51,6 @@ function OnlineRoomUsers({setOpen, open}) {
         </p>
     
         <div className={styles.room}>
-
-            <div className={styles.close} onClick={()=> setOpen(!open)}>
-                    {<p>X</p>}
-            </div>
-
             <div>
                 <button 
                 onClick={handManualLeave} 
@@ -83,7 +69,6 @@ function OnlineRoomUsers({setOpen, open}) {
                 <p className={styles.online}>Online</p>
 
                 <div className={styles.clientsList}>
-
                     {clients.map((client) => {
                         return (
                             <div className={styles.client} key={client.id}>
@@ -126,7 +111,6 @@ function OnlineRoomUsers({setOpen, open}) {
 
             </div>
         </div>
-
     </div>
     );
 };

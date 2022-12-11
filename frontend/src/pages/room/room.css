@@ -6,7 +6,6 @@
     margin: 0 auto;
     position: relative;
     background: #1d1d1d;
-
 }
 
 .leftSide, .rightSide {
@@ -16,6 +15,7 @@
     height: 100%;
     top: 4.5rem;
     z-index: 900;
+    border-radius: 10px;
 }
 
 .leftSide{
@@ -27,7 +27,7 @@
     background: #1d1d1d;
     height: 100%;
     top: 8rem;
-    left: 1rem ;
+    left: 0.8rem ;
     z-index: 900;
     cursor: pointer;
 }
@@ -37,7 +37,7 @@
     background: #1d1d1d;
     height: 100%;
     top: 8rem;
-    right: 1rem ;
+    right: 0.8rem ;
     z-index: 900;
     cursor: pointer;
 }
@@ -47,7 +47,21 @@
 }
 
 .center {
-    width: 92%;
+    width: 95%;
     z-index: 10;
     border-radius: 20px;
+}
+
+
+
+@media screen and (max-width: 500px){
+    .leftSide, .rightSide {
+    position: fixed;
+    background: #1d1d1d;
+    width: 50%;
+    height: 100%;
+    top: 4.5rem;
+    z-index: 900;
+    border-radius: 10px;
+    }
 }
