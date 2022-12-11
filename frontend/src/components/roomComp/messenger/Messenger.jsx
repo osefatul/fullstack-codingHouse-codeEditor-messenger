@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -6,18 +6,46 @@ import "./messenger.css"
 import {initChatSocket} from "../../../socket/chatSocket"
 import toast from 'react-hot-toast';
 import {BsThreeDotsVertical} from "react-icons/bs"
+import { updateRoom } from '../../../http';
 
 
 function Messenger({setOpen, open}) {
+
     const user = useSelector((state) => state.auth.user);
+
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState("");
+
     const {id: roomId} = useParams();
     const socket = useRef(null);
+    const messageRef= useRef(null);
+
+
 
     const ChatHandler = (e) => {
         e.preventDefault();
-
         console.log(e.target.value)
+        setNewMessage(e.target.value)
     }
+
+    const submitMessage = async (e) => {
+        e.preventDefault();
+        console.log("Sending Message", newMessage)
+        
+        const data = {
+            message: newMessage,
+            sender:user?.name,
+            roomId
+        }
+        await updateRoom(data)
+        await socket.current.emit("SEND_MESSAGE", data)
+    }
+
+    const handleInputEnter = (e) => {
+        if (e.code === 'Enter') {
+            submitMessage(e)
+        }
+    };
 
 
     useEffect(()=>{
@@ -38,6 +66,13 @@ function Messenger({setOpen, open}) {
         init();
 
     },[])
+
+
+    useEffect(() => {
+        socket?.current?.on("RECEIVE_MESSAGE", (message) =>{
+            console.log("Message received", message)
+        })
+    },[socket.current, socket])
 
 
 return (
@@ -74,6 +109,10 @@ return (
                 rows="5"
                 placeholder='Please enter your your message here...'
                 onChange={ChatHandler}
+                value={newMessage}
+                ref={messageRef}
+                onKeyUp={handleInputEnter}
+
                 >
                 </textarea>
             </div>

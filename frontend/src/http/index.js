@@ -1,11 +1,23 @@
 import axios from 'axios';
 const serverUrl = "http://localhost:5500"
+const socketServerUrl = "http://localhost:8000"
+
 
 
 
 const api = axios.create({
     // baseURL: process.env.REACT_APP_API_URL,
     baseURL: serverUrl,
+    withCredentials: true, //use this for sending cookies
+    headers: {
+        'Content-type': 'application/json',
+        Accept: 'application/json',
+    },
+});
+
+const secondApi = axios.create({
+    // baseURL: process.env.REACT_APP_API_URL,
+    baseURL: socketServerUrl,
     withCredentials: true, //use this for sending cookies
     headers: {
         'Content-type': 'application/json',
@@ -23,6 +35,8 @@ export const logout = () => api.post('/api/logout');
 export const createRoom = (data) => api.post('/api/rooms', data);
 export const getAllRooms = () => api.get('/api/rooms');
 export const getRoom = (roomId) => api.get(`/api/rooms/${roomId}`);
+export const updateRoom = (data) => secondApi.put('/api/updateRoom', data);
+
 
 
 //Interceptors are functions that Axios calls for every request or response. You can use interceptors to transform the request before Axios sends it, or transform the response before Axios returns the response to your code. You can think of interceptors as Axios' equivalent to middleware in Express or Mongoose.

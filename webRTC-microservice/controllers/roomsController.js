@@ -1,5 +1,9 @@
 const RoomDto = require('../dtos/roomDto');
+const { findOneAndUpdate } = require('../models/roomModel');
 const roomService = require('../services/roomService');
+
+
+
 
 class RoomsController {
     
@@ -33,6 +37,8 @@ class RoomsController {
 
         return res.json(room);
     }
+
+    
 }
 
 module.exports = new RoomsController();

@@ -5,10 +5,24 @@ const http = require('http');
 const Server = http.createServer(app);
 const mongoDb = require('mongoose')
 const bodyParser = require("body-parser");
+const router = require('./routes');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
+
 
 const io = require('socket.io')(Server)
 
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    next();
+});
+
+
+app.use(cookieParser());
 const corsOption = {
     credentials: true,
     origin: ['http://localhost:3000'],
@@ -17,10 +31,13 @@ const corsOption = {
 app.use(cors(corsOption));
 
 const PORT = process.env.PORT || 8000;
+
+
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
-
+app.use(router);
 
 mongoDb.set('strictQuery', true);
 console.log("Connected to MongoDB")
@@ -33,9 +50,12 @@ io.on("connection", (socket)=>{
     socket.on("JOIN_CHAT", (user, roomId)=>{
         console.log(user, "JOINED CHAT")
     })
+
+    socket.on("SEND_MESSAGE", (data)=>{
+        console.log("SendMessage", data)
+        socket.emit("RECEIVE_MESSAGE", data.message)
+    })
 })
-
-
 
 
 

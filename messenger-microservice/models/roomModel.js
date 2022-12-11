@@ -17,7 +17,7 @@ const roomSchema = new Schema(
         },
         conversation: [
             {
-                sender: {type: Schema.Types.ObjectId, ref: 'User'},
+                sender: {type: String, ref: 'User'},
                 message: {type: String},
                 msgAt: {
                     type: Date,
