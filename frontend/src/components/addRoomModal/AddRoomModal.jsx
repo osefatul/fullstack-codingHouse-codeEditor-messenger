@@ -81,7 +81,6 @@ function AddRoomModal({ onClose }) {
                 </div>
 
                 <div className={styles.modalFooter}>
-
                     <button
                         onClick={createRoom}
                         className={styles.footerButton}

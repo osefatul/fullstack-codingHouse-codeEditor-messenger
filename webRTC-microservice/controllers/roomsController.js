@@ -1,5 +1,4 @@
 const RoomDto = require('../dtos/roomDto');
-const { findOneAndUpdate } = require('../models/roomModel');
 const roomService = require('../services/roomService');
 
 
@@ -26,8 +25,19 @@ class RoomsController {
         return res.json(new RoomDto(room));
     }
 
+
     async index(req, res) {
-        const rooms = await roomService.getAllRooms(['open']);
+        // const rooms = await roomService.getAllRooms(['open', 'private', 'social']);
+        
+        const rooms = await roomService.getAllRooms();
+        const allRooms = rooms.map((room) => new RoomDto(room));
+        return res.json(allRooms);
+    }
+
+    async roomTypes(req, res) {
+        // const rooms = await roomService.getAllRooms(['open', 'private', 'social']);
+        console.log(req.query)
+        const rooms = await roomService.getSpecificRooms(req.query.roomType);
         const allRooms = rooms.map((room) => new RoomDto(room));
         return res.json(allRooms);
     }

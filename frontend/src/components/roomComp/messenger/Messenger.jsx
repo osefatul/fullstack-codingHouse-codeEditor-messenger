@@ -29,6 +29,8 @@ function Messenger({setOpen, open}) {
 
     useEffect(()=>{
         getChats()
+        messageRef.current?.scrollIntoView({ behavior: "smooth" });
+
     },[])
 
 
@@ -77,8 +79,8 @@ function Messenger({setOpen, open}) {
         }
         init();
 
-        // Always scroll to last Message
-        messageRef.current?.scrollIntoView({ behavior: "smooth" });
+            // Always scroll to last Message
+            messageRef.current?.scrollIntoView({ behavior: "smooth" });
 
     },[])
 

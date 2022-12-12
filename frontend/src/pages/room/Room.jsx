@@ -10,8 +10,6 @@ import "./room.css"
 
 
 function Room() {
-    const user = useSelector((state) => state.auth.user);
-    const { id: roomId } = useParams();
     const [leftOpen, setLeftOpen] = useState(true);
     const [rightOpen, setRightOpen] = useState(true);
 

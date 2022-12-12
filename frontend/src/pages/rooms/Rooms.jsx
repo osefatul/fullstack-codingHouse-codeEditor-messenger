@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './rooms.module.css';
-import { getAllRooms } from '../../http';
+import { getAllRooms, getSpecificRooms } from '../../http';
 import RoomCard from '../../components/roomCard/RoomCard';
 import AddRoomModal from '../../components/addRoomModal/AddRoomModal';
+
 
 
 const dummyRooms = [
@@ -78,38 +79,36 @@ const dummyRooms = [
 
 
 const Rooms = () => {
-
+    const [selectRooms, setSelectRooms] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [data, setData] = useState([]);
     const [rooms, setRooms] = useState([]);
 
+    const roomOptions = [
+        {id:0, name:"All Rooms", roomType:"All"},
+        {id:1,name:"Public Rooms", roomType:"open"},
+        {id:2,name:"Private Rooms", roomType:"private"}
+    ]
+
+
+    const fetchRooms = async () => {
+        const { data } = await getAllRooms();
+        setRooms(data);
+        setData(data)
+        console.log(data)
+    };
+
     useEffect(() => {
-        const fetchRooms = async () => {
-            const { data } = await getAllRooms();
-            setRooms(data);
-            setData(data)
-            console.log(rooms)
-        };
         fetchRooms();
     }, []);
 
 
-    function openModal() {
-        setShowModal(true);
-    }
-    
-// Filter
+    // Filter
     const searchRoom = (e)=>{
         e.preventDefault();
         
         setData(data.filter( r => {
             if(!e.target.value){
-                const fetchRooms = async () => {
-                    const { data } = await getAllRooms();
-                    setRooms(data);
-                    setData(data)
-                    console.log(rooms)
-                };
                 fetchRooms();
             }
             else{
@@ -121,25 +120,52 @@ const Rooms = () => {
     useEffect(()=>{
         setRooms(data)
     },[data])
+
+
+    useEffect(()=>{
+        const filterRooms = async () => {
+            const roomName = await roomOptions[selectRooms].roomType;
+
+            if(roomName === "All"){
+                fetchRooms()
+            }
+            else{
+                const {data} = await getSpecificRooms({roomType: roomName})
+                setRooms(data);
+                setData(data)
+                console.log(data)
+            }
+        }
+        filterRooms()
+    },[selectRooms])
+
+
+    const handleRooms = async (index) => {
+        setSelectRooms(index)
+    }
+
     
     
     return (
         <>
             <div className="container">
-                
                 <div className={styles.roomsHeader}>
-
                     <div className={styles.left}>
-                        <span className={styles.heading}>All rooms</span>
-                        <div className={styles.searchBox}>
-                            <img src="/images/search-icon.png" alt="search" />
-                            <input type="text" className={styles.searchInput} onChange={searchRoom}/>
-                        </div>
+                        {
+                            roomOptions.map((option, index) =>(
+                                <span key={index} 
+                                className={`${styles.heading} ${selectRooms === index ? styles.active : ""}`}
+                                onClick={() => handleRooms(index)}
+                                >
+                                    {option.name}
+                                </span>
+                            ))
+                        }
                     </div>
 
                     <div className={styles.right}>
                         <button
-                            onClick={openModal}
+                            onClick={() => setShowModal(true)}
                             className={styles.startRoomButton}>
                             <img
                                 src="/images/add-room-icon.png"
@@ -148,7 +174,11 @@ const Rooms = () => {
                             <span>Start a room</span>
                         </button>
                     </div>
+                </div>
 
+                <div className={styles.searchBox}>
+                    <img src="/images/search-icon.png" alt="search" />
+                    <input type="text" className={styles.searchInput} onChange={searchRoom}/>
                 </div>
 
                 <div className={styles.roomList}>
@@ -157,7 +187,6 @@ const Rooms = () => {
                     ))}
                 </div>
             </div>
-
             {showModal && <AddRoomModal onClose={() => setShowModal(false)} />}
         </>
     );
