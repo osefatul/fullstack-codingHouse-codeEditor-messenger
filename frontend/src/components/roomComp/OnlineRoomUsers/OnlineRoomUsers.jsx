@@ -17,6 +17,18 @@ function OnlineRoomUsers({setOpen, open}) {
     const { id: roomId } = useParams();
     const { clients, provideRef, handleMute } = useWebRTC(roomId, user);
 
+
+    const fetchRoom = async () => {
+        const { data } = await getRoom(roomId);
+        console.log(data)
+        setRoom((prev) => data);
+    };
+
+    useEffect(() => {
+        fetchRoom();
+    }, [])
+
+
     useEffect(() => {
         const fetchRoom = async () => {
             const { data } = await getRoom(roomId);

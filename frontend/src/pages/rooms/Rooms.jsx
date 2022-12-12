@@ -188,7 +188,8 @@ const Rooms = () => {
 
                 <div className={styles.roomList}>
                     {rooms.map((room) => (
-                        <RoomCard className={styles.roomCard} key={room.id} room={room} roomType={room.roomType}/>
+                        
+                        <RoomCard className={styles.roomCard} key={room.id} room={room} />
                     ))}
                 </div>
             </div>

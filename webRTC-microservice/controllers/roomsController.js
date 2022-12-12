@@ -34,7 +34,7 @@ class RoomsController {
         const allRooms = rooms.map((room) => new RoomDto(room));
 
         //Filtered those private rooms from users that did not belong to them
-        const filteredRooms = rooms.filter( room => {
+        const filteredRooms = allRooms.filter( room => {
             if(room.roomType === "private"  && room.ownerId.id === req.params.userId){
                 return room
             }
