@@ -3,6 +3,7 @@ import styles from './rooms.module.css';
 import { getAllRooms, getSpecificRooms } from '../../http';
 import RoomCard from '../../components/roomCard/RoomCard';
 import AddRoomModal from '../../components/addRoomModal/AddRoomModal';
+import { useSelector } from 'react-redux';
 
 
 
@@ -79,6 +80,8 @@ const dummyRooms = [
 
 
 const Rooms = () => {
+
+    const {user} = useSelector(state => state.auth)
     const [selectRooms, setSelectRooms] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [data, setData] = useState([]);
@@ -92,7 +95,7 @@ const Rooms = () => {
 
 
     const fetchRooms = async () => {
-        const { data } = await getAllRooms();
+        const { data } = await getAllRooms({userId: user?.id});
         setRooms(data);
         setData(data)
         console.log(data)
@@ -123,6 +126,7 @@ const Rooms = () => {
 
 
     useEffect(()=>{
+        
         const filterRooms = async () => {
             const roomName = await roomOptions[selectRooms].roomType;
 
@@ -130,7 +134,8 @@ const Rooms = () => {
                 fetchRooms()
             }
             else{
-                const {data} = await getSpecificRooms({roomType: roomName})
+                const {data} = await getSpecificRooms(
+                    {roomType:roomName, userId:user?.id})
                 setRooms(data);
                 setData(data)
                 console.log(data)
@@ -183,7 +188,7 @@ const Rooms = () => {
 
                 <div className={styles.roomList}>
                     {rooms.map((room) => (
-                        <RoomCard className={styles.roomCard} key={room.id} room={room} />
+                        <RoomCard className={styles.roomCard} key={room.id} room={room} roomType={room.roomType}/>
                     ))}
                 </div>
             </div>

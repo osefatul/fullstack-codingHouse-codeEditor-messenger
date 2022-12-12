@@ -15,23 +15,41 @@ class RoomService {
     }
 
 
-    async getAllRooms(types) {
-        const rooms = await RoomModel.find()
-            .populate('speakers')//this will not only send id but whole object of speakers.
-            .populate('ownerId')
-            .exec();
-        return rooms;
+    async getAllRooms({userId, types}) {
+
+            const rooms = await RoomModel.find(
+                    {roomType: {$in :types}},
+            )
+                .populate('speakers')//this will not only send id but whole object of speakers.
+                .populate('ownerId')
+                .exec();
+            return rooms;
+    
     }
 
 
-    async getSpecificRooms(types) {
-        const rooms = await RoomModel.find(
-            {roomType: types}
-            )
-            .populate('speakers')//this will not only send id but whole object of speakers.
-            .populate('ownerId')
-            .exec();
-        return rooms;
+    async getSpecificRooms({userId, roomType}) {
+
+        if(roomType === "private") {
+            const rooms = await RoomModel.find(
+                {
+                    $and: [{roomType: roomType}, {ownerId: userId}]
+                }
+                
+                )
+                .populate('speakers')//this will not only send id but whole object of speakers.
+                .populate('ownerId')
+                .exec();
+            return rooms;
+        }
+        else{
+            const rooms = await RoomModel.find(
+                {roomType: roomType})
+                .populate('speakers')//this will not only send id but whole object of speakers.
+                .populate('ownerId')
+                .exec();
+            return rooms;
+        }
     }
 
 

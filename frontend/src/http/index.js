@@ -33,8 +33,8 @@ export const verifyOtp = (data) => api.post('/api/verify-otp', data);
 export const activate = (data) => api.post('/api/activate', data);
 export const logout = () => api.post('/api/logout');
 export const createRoom = (data) => api.post('/api/rooms', data);
-export const getAllRooms = () => api.get('/api/rooms/');
-export const getSpecificRooms = ({roomType}) => api.get('/api/specificRooms/'+"?roomType="+ roomType);
+export const getAllRooms = ({userId}) => api.get(`/api/rooms/${userId}`);
+export const getSpecificRooms = ({roomType, userId}) => api.get(`/api/specificRooms/${userId}`+"?roomType="+ roomType);
 export const getRoom = (roomId) => api.get(`/api/rooms/${roomId}`);
 export const updateRoom = (data) => secondApi.put('/api/updateRoom', data);
 

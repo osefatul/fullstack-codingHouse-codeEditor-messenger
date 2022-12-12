@@ -15,7 +15,6 @@ class RoomsController {
                 .status(400)
                 .json({ message: 'All fields are required!' });
         }
-
         const room = await roomService.create({
             topic,
             roomType,
@@ -28,16 +27,32 @@ class RoomsController {
 
     async index(req, res) {
         // const rooms = await roomService.getAllRooms(['open', 'private', 'social']);
-        
-        const rooms = await roomService.getAllRooms();
+        const rooms = await roomService.getAllRooms(
+            {userId:req.params.userId,
+            types:['open', 'social', 'private']});
+
         const allRooms = rooms.map((room) => new RoomDto(room));
-        return res.json(allRooms);
+
+        //Filtered those private rooms from users that did not belong to them
+        const filteredRooms = rooms.filter( room => {
+            if(room.roomType === "private"  && room.ownerId.id === req.params.userId){
+                return room
+            }
+            
+            if(room.roomType === 'open'){
+                return room
+            }
+            
+        })
+
+        console.log("Starts from here", filteredRooms)
+
+        return res.json(filteredRooms);
     }
 
     async roomTypes(req, res) {
         // const rooms = await roomService.getAllRooms(['open', 'private', 'social']);
-        console.log(req.query)
-        const rooms = await roomService.getSpecificRooms(req.query.roomType);
+        const rooms = await roomService.getSpecificRooms({userId:req.params.userId, roomType:req.query.roomType});
         const allRooms = rooms.map((room) => new RoomDto(room));
         return res.json(allRooms);
     }

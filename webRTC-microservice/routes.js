@@ -11,8 +11,8 @@ router.post('/api/activate', authMiddleware, activateController.activate);
 router.get('/api/refresh', authController.refresh);//refresh token
 router.post('/api/logout', authMiddleware, authController.logout);
 router.post('/api/rooms', authMiddleware, roomsController.create);
-router.get('/api/rooms', authMiddleware, roomsController.index);
-router.get('/api/specificRooms', authMiddleware, roomsController.roomTypes);
+router.get('/api/rooms/:userId', authMiddleware, roomsController.index);
+router.get('/api/specificRooms/:userId', authMiddleware, roomsController.roomTypes);
 router.get('/api/rooms/:roomId', authMiddleware, roomsController.show);
 router.get('/api/test', (req, res) => res.json({ msg: 'OK' }));
 
