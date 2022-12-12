@@ -45,15 +45,23 @@ mongoDb.connect(process.env.MONGO_URL).then(
 ).catch(err => console.error(err));
 
 
+const userSocketMap = {};
+
 
 io.on("connection", (socket)=>{
-    socket.on("JOIN_CHAT", (user, roomId)=>{
-        console.log(user, "JOINED CHAT")
+    console.log('socket connected', socket.id);
+
+    socket.on("JOIN_CHAT", ({user, roomId})=>{
+
+        userSocketMap[socket.id] = user;
+        socket.join(roomId);
     })
 
-    socket.on("SEND_MESSAGE", (data)=>{
-        console.log("SendMessage", data)
-        socket.emit("RECEIVE_MESSAGE", {message:data.message})
+
+    socket.on("SEND_MESSAGE", ({roomId, message})=>{
+        console.log("SendMessage", roomId, message)
+
+        socket.in(roomId).emit("RECEIVE_MESSAGE", {roomId, message})
     })
 })
 

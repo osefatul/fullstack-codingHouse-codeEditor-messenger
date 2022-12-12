@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { getRoom, updateRoom } from '../../../http';
 function Messenger({setOpen, open}) {
 
     const user = useSelector((state) => state.auth.user);
-
+    const [receivedMessage, setReceivedMessage] = useState()
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
 
@@ -21,34 +21,46 @@ function Messenger({setOpen, open}) {
     const messageRef= useRef(null);
 
 
+    const getChats = async ()=>{
+        const { data } = await getRoom(roomId);
+        setMessages(data.conversation);
+        messageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+
+    useEffect(()=>{
+        getChats()
+    },[])
+
 
     const ChatHandler = (e) => {
-        e.preventDefault();
-        console.log(e.target.value)
         setNewMessage(e.target.value)
     }
 
     const submitMessage = async (e) => {
         e.preventDefault();
-        console.log("Sending Message", newMessage)
         
         const data = {
             message: newMessage,
             sender:user?.name,
-            roomId
+            roomId:roomId
         }
-        await updateRoom(data)
+
+        await updateRoom(data) //send message to database
+        //send message to socket server
         await socket.current.emit("SEND_MESSAGE", data)
+
+        //get the sent message from db in order to render them...
+        await getChats() 
     }
 
     const handleInputEnter = (e) => {
         if (e.code === 'Enter') {
             submitMessage(e)
-            setNewMessage(" ")
+            setNewMessage("")
         }
     };
 
-
+    //when component is mounted
     useEffect(()=>{
         const init = async ()=>{
             socket.current = await initChatSocket()
@@ -63,79 +75,60 @@ function Messenger({setOpen, open}) {
 
             socket.current.emit("JOIN_CHAT", {roomId, user: user?.name})
         }
-
         init();
 
-
-        const fetchRoom = async () => {
-            const { data } = await getRoom(roomId);
-            setMessages(data.conversation);
-            console.log(data)
-            messageRef.current?.scrollIntoView({ behavior: "smooth" });
-        };
-
-        fetchRoom();
+        // Always scroll to last Message
+        messageRef.current?.scrollIntoView({ behavior: "smooth" });
 
     },[])
 
 
+    // When we received message form server...
     useEffect(() => {
-        socket?.current?.on("RECEIVE_MESSAGE", (message) =>{
-            console.log("Message received", message)
-            const fetchRoom = async () => {
-                const { data } = await getRoom(roomId);
-                setMessages(data.conversation);
-                messageRef.current?.scrollIntoView({ behavior: "smooth" });
-                console.log(data)
-            };
-            fetchRoom();
-        })
+        if(socket.current)
+        {
+            socket.current.on("RECEIVE_MESSAGE", ({roomId, message}) =>{
+                setReceivedMessage({roomId, message})
+
+                // once we receive a message then show this to the receiver. and get message frm db
+                getChats() 
+            })
+        }
     },[socket.current, socket])
 
 
-      // Always scroll to last Message
-    useEffect(()=> {
-    messageRef.current?.scrollIntoView({ behavior: "smooth" });
-    },[])
-
 return (
-
-    <div className='topMessengerWrapper' 
-        ref={messageRef}
-    >
+    <div className='topMessengerWrapper' >
 
         <p className="burger" onClick = {()=> setOpen(!open)}>
             <BsThreeDotsVertical/>
         </p>
         
-        <div className='messenger'
-            // ref={messageRef}
-        >
+        <div className='messenger'>
             <div className='messengerWrap'>
-                <h4>Live Chat..</h4>
+                <h4>Live Chat ...</h4>
                 <div className='conversation'>
 
-                    <div className='message'>
-                        <p>
-                            <span className='user'>Omar</span>
-                            <span>{}</span>
-                        </p>
-
-                        <p className='text'>
-                            This is my message for our fist conversation...
-                        </p>
-                    </div>
-
                     {messages?.map((message) =>(
-                        <div className='message'>
-                            <p>
-                                <span className='user'>{message.sender}</span>
-                                {/* <span>{new Date(message.msgAt)}</span> */}
-                            </p>
+                        <div>
+                                <span className='user'>@{message?.sender}</span>
+                            
+                            <div className={`message ${message?.sender === user.name? "userMessage":""}`}>
+                                <p>
+                                    <span className='msgAt'>
+                                        {new Date(message.msgAt).toLocaleString()}
+                                    </span>
+                                </p>
 
-                            <p className='text'>
-                                {message.message}
-                            </p>
+                                <p className='text'
+                                ref={messageRef}
+                                
+                                >
+                                    {message?.message}
+                                </p>
+
+                            </div>
+                            
                         </div>
 
                     ))}
