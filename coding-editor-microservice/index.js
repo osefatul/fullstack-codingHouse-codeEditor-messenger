@@ -8,6 +8,11 @@ const ACTIONS = require("./Actions")
 const cors = require('cors');
 const server = http.createServer(app);
 const io = new Server(server);
+const routes = require("./routes")
+const bodyParser = require("body-parser");
+const mongoDb = require('mongoose')
+require('dotenv').config();
+
 
 
 app.use(function (req, res, next) {
@@ -28,18 +33,28 @@ const corsOption = {
 
 app.use(cors(corsOption));
 
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static('build'));
-// app.use((req, res, next) => {
-//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
+app.use(express.json());
+app.use(routes)
+
+
+
+mongoDb.set('strictQuery', true);
+console.log("Connected to MongoDB")
+mongoDb.connect(process.env.MONGO_URL).then(
+).catch(err => console.error(err));
 
 
 
 
+
+
+
+//SOCKET FUNCTIONALITIES
 
 const userSocketMap = {};
-
 function getAllConnectedClients(roomId) {
     // Map
     return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
@@ -103,8 +118,6 @@ io.on('connection', (socket) => {
 
 
 
-
-
     // receive a message from the client code synced.
 
     // socket.on("SYNC_CODE", ({ socketId, code }) => {
@@ -114,17 +127,17 @@ io.on('connection', (socket) => {
 
     socket.on("XML_SYNC_CODE", ({ socketId, code }) => {
         console.log("xml sync code:" + code);
-        io.to(socketId).emit("XML_CODE_CHANGE", { code });
+        io.to(socketId).emit("XML_CODE_CHANGE", { xml:code });
     });
 
     socket.on("CSS_SYNC_CODE", ({ socketId, code }) => {
         console.log("css sync code:" + code);
-        io.to(socketId).emit("CSS_CODE_CHANGE", { code });
+        io.to(socketId).emit("CSS_CODE_CHANGE", { css:code });
     });
 
     socket.on("JS_SYNC_CODE", ({ socketId, code }) => {
         console.log("js sync code:" + code);
-        io.to(socketId).emit("JS_CODE_CHANGE", { code });
+        io.to(socketId).emit("JS_CODE_CHANGE", { js:code });
     });
 
 

@@ -12,16 +12,14 @@ import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/edit/closetag';
 import { Controlled as ControlledEditorComponent } from 'react-codemirror2';
 import "./codeEditor.css"
-
-
-
+import {updateCSSCode, updateJSCode, updateXMLCode } from '../../../http';
 
 
 const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCodeChange  }) => {
-    
 
     const editorRef = useRef(null);
     const [theme, setTheme] = useState("dracula")
+    // const { id: roomId } = useParams();
     const themeArray = ['dracula', 'monokai', 'mdn-like', 'the-matrix', 'night']
 
 
@@ -32,11 +30,14 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
             setEditorState(value);
 
             if(language === "xml"){
+
                 console.log("this is xml:", language)
-            await socketRef.current.emit("XML_CODE_CHANGE", {
+                await socketRef.current.emit("XML_CODE_CHANGE", {
                 roomId,
                 code:value
             });
+
+            await updateXMLCode({xml:value, roomId })
             }
 
             else if(language === "css"){
@@ -45,18 +46,20 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
                     roomId,
                     code:value
                 });
+
+                await updateCSSCode({css:value, roomId })
+
             }
 
             else {
-                console.log("this js:", language)
+                console.log("this is js:", language)
                 await socketRef.current.emit("JS_CODE_CHANGE", {
-                    
                     roomId,
                     code:value
                 });
+                await updateJSCode({js:value, roomId })
             }
         }
-
         init();
     }
 
@@ -69,13 +72,11 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
         console.log(value)
     },[])
 
-
     useEffect(() => {
         async function init() {
             // console.log(value)
             onCodeChange(value);
             setEditorState(value);
-
 
             if( value && language === "xml"){
                 console.log("this is xml:", language)
@@ -85,7 +86,6 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
             });
             }
 
-
             else if(value && language === "css"){
                 console.log("this is css:", language)
                 await socketRef?.current?.emit("CSS_CODE_CHANGE", {
@@ -94,7 +94,7 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
                 });
             }
 
-            else {
+            else if(value && language === "js") {
                 console.log("this is js:", language)
                 await socketRef?.current?.emit("JS_CODE_CHANGE", {
                     roomId,
@@ -109,17 +109,14 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
 
 
 
-
-
     useEffect(() => {
-
-
         if( socketRef.current && language === "xml"){
             socketRef.current.on("XML_CODE_CHANGE", ({ xml }) => {
-                console.log(xml)
+                console.log("receiving xml", xml)
 
                 if (xml)  {
                     // setCode(serverCode);
+                    // editorRef.current.value = xml
                     onCodeChange(xml);
                     setEditorState(xml)
                 }
@@ -132,6 +129,7 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
                 console.log(css)
 
                 if (css)  {
+                    // editorRef.current.value = css
                     onCodeChange(css);
                     setEditorState(css)
                 }
@@ -144,7 +142,7 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
                 console.log(js)
 
                 if (js)  {
-
+                    // editorRef.current.value = js
                     onCodeChange(js);
                     setEditorState(js)
                 }

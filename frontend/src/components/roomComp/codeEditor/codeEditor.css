@@ -20,6 +20,7 @@ display: flex;
 width: 100%;
 flex-direction: column;
 height: 100%;
+position: relative;
 }
 
 .editorWrap{
@@ -28,6 +29,19 @@ overflow-y: auto;
 height: 80%;
 }
 
+.topWrapEditor{
+    position: relative;
+}
+
+.topWrapEditor .buttons{
+    position: fixed;
+    top: 5px;
+    right: 0;
+    left: 0;
+    width: 50%;
+    margin: 0 auto;
+    
+}
 
 .colsWrapper .iframe{
 background-color: gray ;
@@ -54,13 +68,18 @@ width: 100%;
 flex-direction: column;
 align-items: center;
 justify-content: center;
+position: relative;
 }
 
 .editorContainer .themes{
-background-color: #282A36;
-width: 100%;
+position: fixed;
+top: 42px;
+right: 0;
+left: 0;
+background-color: #1D1D1D;
+width: 50%;
 display: flex;
-width: 100%;
+margin: 0 auto;
 align-items: center;
 justify-content: center;
 color: coral;
@@ -95,4 +114,44 @@ min-height: calc(100vh - 20px);
 font-size: 20px;
 line-height: 1.6;
 padding-top: 20px;
+}
+
+
+@media screen and (max-width: 600px) {
+    .topWrapEditor{
+        position: relative;
+    }
+    
+    .topWrapEditor .buttons{
+        position: relative;
+
+        width: 100%;
+
+    }
+
+
+
+    .editorContainer{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        }
+        
+        .editorContainer .themes{
+        position: relative;
+        /* background-color: #282A36; */
+        top: 0rem;
+        z-index:900;
+        width: 100%;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        color: coral;
+        gap: 20px;
+        padding-bottom: 10px;
+        }
+    
 }

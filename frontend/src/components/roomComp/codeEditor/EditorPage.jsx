@@ -59,7 +59,6 @@ const EditorPage = () => {
     const JsCodeRef = useRef(null);
 
 
-    const location = useLocation();
     const reactNavigator = useNavigate();
     
 
@@ -86,12 +85,11 @@ const EditorPage = () => {
             });
 
 
-
             // Listening for joined event
             socketRef.current.on(
                 "JOINED",
                 ({ clients, username, socketId }) => {
-                    if (username !== location.state?.username) {
+                    if (username !== user) {
                         toast.success(`${username} joined the room.`);
                         console.log(`${username} joined`);
                     }

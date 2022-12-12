@@ -217,19 +217,23 @@ position: relative;
 }
 
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 500px) {
+
     .burger{
-        position: absolute;
-        top: -50px;
-        left: 10px;
+        z-index: 990;
+        position: fixed;
+        top: 20%;
+        left: 40%;
         font-size: 20px;
         display: flex;
         justify-content: flex-end;
         transition: all 0.5s ease-in-out;
         cursor: pointer;
+        color: rgb(224, 214, 25);
+        font-weight:800;
     }
+        
 
-    
 }
 
 

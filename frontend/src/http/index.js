@@ -1,5 +1,6 @@
 import axios from 'axios';
 const serverUrl = "http://localhost:5500"
+const codeEditorServerUrl = "http://localhost:5000"
 const socketServerUrl = "http://localhost:8000"
 
 
@@ -26,6 +27,17 @@ const secondApi = axios.create({
 });
 
 
+const codeEditorApi = axios.create({
+    // baseURL: process.env.REACT_APP_API_URL,
+    baseURL: codeEditorServerUrl,
+    withCredentials: true, //use this for sending cookies
+    headers: {
+        'Content-type': 'application/json',
+        Accept: 'application/json',
+    },
+});
+
+
 
 // List of all the endpoints
 export const sendOtp = (data) => api.post('/api/send-otp', data);
@@ -36,7 +48,13 @@ export const getRoom = (roomId) => api.get(`/api/editorRoom/${roomId}`);
 export const createRoom = (data) => api.post('/api/rooms', data);
 export const getAllRooms = ({userId}) => api.get(`/api/rooms/${userId}`);
 export const getSpecificRooms = ({roomType, userId}) => api.get(`/api/specificRooms/${userId}`+"?roomType="+ roomType);
+
 export const updateRoom = (data) => secondApi.put('/api/updateRoom', data);
+
+export const updateXMLCode = (data) => codeEditorApi.put('/api/XMLCodes', data);
+export const updateCSSCode = (data) => codeEditorApi.put('/api/CSSCodes', data);
+export const updateJSCode = (data) => codeEditorApi.put('/api/JSCodes', data);
+
 
 
 

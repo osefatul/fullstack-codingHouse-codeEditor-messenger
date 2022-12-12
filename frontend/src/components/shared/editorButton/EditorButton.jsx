@@ -5,10 +5,11 @@ const EditorButton = ({ title, backgroundColor, onClick }) => {
     <div>
         <button
         style={{
-            maxWidth: "140px",
-            minWidth: "80px",
-            height: "30px",
+            maxWidth: "120px",
+            minWidth: "50px",
+            height: "25px",
             marginRight: "5px",
+            borderRadius:"2px",
             backgroundColor: backgroundColor,
         }}
         onClick={onClick}
