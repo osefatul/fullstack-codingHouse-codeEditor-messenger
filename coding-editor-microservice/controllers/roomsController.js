@@ -45,7 +45,7 @@ class RoomsController {
 
     async getAllCodes (req, res) {
         const updateRoom = await RoomModel.findById(
-            {_id: req.body.roomId}
+            {_id: req.params.roomId}
         )
         res.status(200).json({message:"Code Updated", updateRoom})
     }

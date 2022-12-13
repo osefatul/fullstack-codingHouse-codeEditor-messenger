@@ -8,6 +8,6 @@ router.put("/api/XMLCodes", roomsController.XMLcodes)
 router.put("/api/CSSCodes", roomsController.CSScodes)
 router.put("/api/JSCodes", roomsController.JScodes)
 
-router.get("/api/getAllCodes", roomsController.getAllCodes)
+router.get("/api/getAllCodes/:roomId", roomsController.getAllCodes)
 
 module.exports = router;

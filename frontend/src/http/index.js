@@ -54,7 +54,7 @@ export const updateRoom = (data) => secondApi.put('/api/updateRoom', data);
 export const updateXMLCode = (data) => codeEditorApi.put('/api/XMLCodes', data);
 export const updateCSSCode = (data) => codeEditorApi.put('/api/CSSCodes', data);
 export const updateJSCode = (data) => codeEditorApi.put('/api/JSCodes', data);
-
+export const getCodes = (roomId) => codeEditorApi.get(`/api/getAllCodes/${roomId}`)
 
 
 

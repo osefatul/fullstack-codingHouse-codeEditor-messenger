@@ -14,19 +14,23 @@ import { useSelector } from 'react-redux';
 
 
 
-const EditorPage = () => {
+const EditorPage = ({code, setRoom}) => {
+
+    // const [codes, setCodes] = useState(room)
+
+    console.log("EditorPageRoom", code)
 
     const [openedEditor, setOpenedEditor] = useState("html");
     const [activeButton, setActiveButton] = useState("html");
 
-    const [html, setHtml] = useState("");
-    const [css, setCss] = useState("");
-    const [js, setJs] = useState("");
+    const [html, setHtml] = useState(code?.xml);
+    const [css, setCss] = useState(code?.css);
+    const [js, setJs] = useState();
     const [srcDoc, setSrcDoc] = useState(``);
 
     const { id: roomId } = useParams();
     const user = useSelector((state) => state.auth.user);
-    console.log(roomId)
+    // console.log(roomId)
 
 
     const onTabClick = (editorName) => {
@@ -45,7 +49,7 @@ const EditorPage = () => {
             </html>
         `
             )
-        }, 300);
+        }, 400);
 
         return () => clearTimeout(timeOut)
     }, [html, css, js])
@@ -94,20 +98,21 @@ const EditorPage = () => {
                         console.log(`${username} joined`);
                     }
                     
-                    socketRef.current.emit("XML_SYNC_CODE", {
-                        code: htmlCodeRef.current,
-                        socketId,
-                    });
+                    //once you join the room sync codes in each tab.
+                    // socketRef.current.emit("XML_SYNC_CODE", {
+                    //     code: htmlCodeRef.current,
+                    //     socketId,
+                    // });
 
-                    socketRef.current.emit("CSS_SYNC_CODE", {
-                        code: cssCodeRef.current,
-                        socketId,
-                    });
+                    // socketRef.current.emit("CSS_SYNC_CODE", {
+                    //     code: cssCodeRef.current,
+                    //     socketId,
+                    // });
 
-                    socketRef.current.emit("JS_SYNC_CODE", {
-                        code: JsCodeRef.current,
-                        socketId,
-                    });
+                    // socketRef.current.emit("JS_SYNC_CODE", {
+                    //     code: JsCodeRef.current,
+                    //     socketId,
+                    // });
                 }
             );
         }

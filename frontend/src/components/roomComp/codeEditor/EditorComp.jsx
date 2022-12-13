@@ -12,7 +12,7 @@ import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/edit/closetag';
 import { Controlled as ControlledEditorComponent } from 'react-codemirror2';
 import "./codeEditor.css"
-import {updateCSSCode, updateJSCode, updateXMLCode } from '../../../http';
+import {getCodes, updateCSSCode, updateJSCode, updateXMLCode } from '../../../http';
 
 
 const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCodeChange  }) => {
@@ -68,8 +68,24 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
 
 
     useEffect(()=>{
-        // onCodeChange(code);
-        console.log(value)
+        async function init() {
+            const {data} = await getCodes(roomId)
+            console.log(data.code)
+            // if(language === "xml"){
+                
+            //     // onCodeChange(value);
+            //     // setEditorState(value);
+            // }
+
+            // else if(language === "css"){
+            //     const {data} = await getCodes(roomId)
+            // }
+
+            // else {
+            //     const {data} = await getCodes(roomId)
+            // }
+        }
+        init();
     },[])
 
     useEffect(() => {
@@ -110,8 +126,8 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
 
 
     useEffect(() => {
-        if( socketRef.current && language === "xml"){
-            socketRef.current.on("XML_CODE_CHANGE", ({ xml }) => {
+        if( socketRef?.current && language === "xml"){
+            socketRef?.current.on("XML_CODE_CHANGE", ({ xml }) => {
                 console.log("receiving xml", xml)
 
                 if (xml)  {
@@ -125,7 +141,7 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
 
 
         else if( socketRef.current && language === "css"){
-            socketRef.current.on("CSS_CODE_CHANGE", ({ css }) => {
+            socketRef?.current?.on("CSS_CODE_CHANGE", ({ css }) => {
                 console.log(css)
 
                 if (css)  {
@@ -136,8 +152,8 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
             });
         }
 
-        else if( socketRef.current && language === "javascript"){
-            socketRef.current.on("JS_CODE_CHANGE", 
+        else{
+            socketRef?.current?.on("JS_CODE_CHANGE", 
             ({ js }) => {
                 console.log(js)
 
@@ -202,7 +218,6 @@ return (
             autoCloseTags: true,
             autoCloseBrackets: true, 
         }}
-        // onChange={onChange}
     />
 
 

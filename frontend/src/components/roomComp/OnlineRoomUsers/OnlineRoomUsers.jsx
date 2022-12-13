@@ -7,36 +7,15 @@ import styles from './onlineRoomUsers.module.css';
 import {BsThreeDotsVertical} from "react-icons/bs"
 
 
-function OnlineRoomUsers({setOpen, open}) {
+function OnlineRoomUsers({setOpen, open, room, setRoom}) {
 
     const user = useSelector((state) => state.auth.user);
     const [isMuted, setMuted] = useState(true);
-    const [room, setRoom] = useState(null);
+    // const [room, setRoom] = useState(null);
 
     const navigate = useNavigate();
     const { id: roomId } = useParams();
     const { clients, provideRef, handleMute } = useWebRTC(roomId, user);
-
-
-    const fetchRoom = async () => {
-        const { data } = await getRoom(roomId);
-        console.log(data)
-        setRoom((prev) => data);
-    };
-
-    useEffect(() => {
-        fetchRoom();
-    }, [])
-
-
-    useEffect(() => {
-        const fetchRoom = async () => {
-            const { data } = await getRoom(roomId);
-            setRoom((prev) => data);
-        };
-
-        fetchRoom();
-    }, [roomId]);
 
 
     useEffect(() => {
@@ -54,6 +33,8 @@ function OnlineRoomUsers({setOpen, open}) {
         }
         setMuted((prev) => !prev);
     };
+
+
 
     return (
     <div className={styles.topRoom}>
@@ -75,7 +56,7 @@ function OnlineRoomUsers({setOpen, open}) {
             <div className={styles.clientsWrap}>
 
                 <div className={styles.header}>
-                    {room && <span className={styles.topic}>{room.topic}</span>}
+                    {room && <span className={styles.topic}>#{room.topic}</span>}
                 </div>
 
                 <p className={styles.online}>Online</p>
