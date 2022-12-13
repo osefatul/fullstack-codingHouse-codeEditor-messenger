@@ -12,10 +12,10 @@ import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/edit/closetag';
 import { Controlled as ControlledEditorComponent } from 'react-codemirror2';
 import "./codeEditor.css"
-import {getCodes, updateCSSCode, updateJSCode, updateXMLCode } from '../../../http';
+import { updateCSSCode, updateJSCode, updateXMLCode } from '../../../http';
 
 
-const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCodeChange  }) => {
+const EditorComp = ({dbValue, language, value, setEditorState, socketRef, roomId, onCodeChange  }) => {
 
     const editorRef = useRef(null);
     const [theme, setTheme] = useState("dracula")
@@ -66,11 +66,14 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
 
 
 
-
     useEffect(()=>{
+
+        if( value && language === "xml"){
+            setEditorState(dbValue?.xml)
+        }
         async function init() {
-            const {data} = await getCodes(roomId)
-            console.log(data.code)
+            // const {data} = await getCodes(roomId)
+            // console.log(data.code)
             // if(language === "xml"){
                 
             //     // onCodeChange(value);
@@ -90,7 +93,7 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
 
     useEffect(() => {
         async function init() {
-            // console.log(value)
+
             onCodeChange(value);
             setEditorState(value);
 
@@ -101,7 +104,6 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
                     code:value
             });
             }
-
             else if(value && language === "css"){
                 console.log("this is css:", language)
                 await socketRef?.current?.emit("CSS_CODE_CHANGE", {
@@ -109,7 +111,6 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
                     code:value
                 });
             }
-
             else if(value && language === "js") {
                 console.log("this is js:", language)
                 await socketRef?.current?.emit("JS_CODE_CHANGE", {
@@ -129,7 +130,6 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
         if( socketRef?.current && language === "xml"){
             socketRef?.current.on("XML_CODE_CHANGE", ({ xml }) => {
                 console.log("receiving xml", xml)
-
                 if (xml)  {
                     // setCode(serverCode);
                     // editorRef.current.value = xml
@@ -143,7 +143,6 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
         else if( socketRef.current && language === "css"){
             socketRef?.current?.on("CSS_CODE_CHANGE", ({ css }) => {
                 console.log(css)
-
                 if (css)  {
                     // editorRef.current.value = css
                     onCodeChange(css);
@@ -156,7 +155,6 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
             socketRef?.current?.on("JS_CODE_CHANGE", 
             ({ js }) => {
                 console.log(js)
-
                 if (js)  {
                     // editorRef.current.value = js
                     onCodeChange(js);
@@ -169,14 +167,13 @@ const EditorComp = ({ language, value, setEditorState, socketRef, roomId, onCode
 
         return () => {
             if(language === "xml"){
-                socketRef.current.off("XML_CODE_CHANGE");
+                socketRef?.current?.off("XML_CODE_CHANGE");
             }
             else if(language === "css"){
-                socketRef.current.off("CSS_CODE_CHANGE");
-
+                socketRef?.current.off("CSS_CODE_CHANGE");
             }
             else{
-                socketRef.current.off("JS_CODE_CHANGE");
+                socketRef?.current.off("JS_CODE_CHANGE");
             }
         };
 

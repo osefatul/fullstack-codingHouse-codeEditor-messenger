@@ -11,24 +11,49 @@ import {
 } from 'react-router-dom';
 import "./codeEditor.css"
 import { useSelector } from 'react-redux';
+import { getRoom } from '../../../http';
 
 
 
 const EditorPage = ({code, setRoom}) => {
 
-    // const [codes, setCodes] = useState(room)
-
-    console.log("EditorPageRoom", code)
+    const [codes, setCodes] = useState()
 
     const [openedEditor, setOpenedEditor] = useState("html");
     const [activeButton, setActiveButton] = useState("html");
 
-    const [html, setHtml] = useState(code?.xml);
-    const [css, setCss] = useState(code?.css);
-    const [js, setJs] = useState();
-    const [srcDoc, setSrcDoc] = useState(``);
+    
 
+    const [html, setHtml] = useState("");
+    const [css, setCss] = useState("");
+    const [js, setJs] = useState("");
+
+    const [srcDoc, setSrcDoc] = useState(``);
     const { id: roomId } = useParams();
+
+
+    // ------------------------------
+    
+    const fetchRoom = async () => {
+        const { data } = await getRoom(roomId);
+        console.log(data)
+        await setCodes((prev) => data.code[0]);
+    };
+
+    useEffect(() => {
+        fetchRoom();
+    }, [])
+
+    useEffect(() => {
+        console.log(codes)
+        setHtml(codes?.xml)
+        setCss(codes?.css);
+        setJs(codes?.js)
+
+    }, [codes, setCodes, roomId]);
+    // ------------------------------
+
+
     const user = useSelector((state) => state.auth.user);
     // console.log(roomId)
 
@@ -99,26 +124,27 @@ const EditorPage = ({code, setRoom}) => {
                     }
                     
                     //once you join the room sync codes in each tab.
-                    // socketRef.current.emit("XML_SYNC_CODE", {
-                    //     code: htmlCodeRef.current,
-                    //     socketId,
-                    // });
+                    socketRef.current.emit("XML_SYNC_CODE", {
+                        code: htmlCodeRef.current,
+                        socketId,
+                    });
 
-                    // socketRef.current.emit("CSS_SYNC_CODE", {
-                    //     code: cssCodeRef.current,
-                    //     socketId,
-                    // });
+                    socketRef.current.emit("CSS_SYNC_CODE", {
+                        code: cssCodeRef.current,
+                        socketId,
+                    });
 
-                    // socketRef.current.emit("JS_SYNC_CODE", {
-                    //     code: JsCodeRef.current,
-                    //     socketId,
-                    // });
+                    socketRef.current.emit("JS_SYNC_CODE", {
+                        code: JsCodeRef.current,
+                        socketId,
+                    });
                 }
             );
         }
         
         init()
         console.log("start ")
+
 
         return () => {
             socketRef.current.disconnect();
@@ -163,8 +189,8 @@ const EditorPage = ({code, setRoom}) => {
                             {
                                 openedEditor === "html" ? (
                                     <EditorCom
+                                    dbValue={code?.xml}
                                     language="xml"
-                                    displayName="HTML"
                                     value={html}
                                     setEditorState={setHtml}
                                     socketRef={socketRef}
@@ -174,8 +200,8 @@ const EditorPage = ({code, setRoom}) => {
                                     }}/>
                                 ): openedEditor === "css" ? (
                                     <EditorCom
+                                    dbValue={code?.css}
                                     language="css"
-                                    displayName="CSS"
                                     value={css}
                                     setEditorState={setCss}
                                     socketRef={socketRef}
@@ -185,6 +211,7 @@ const EditorPage = ({code, setRoom}) => {
                                     }}/>
                                     ) : (
                                     <EditorCom
+                                    dbValue={code?.js}
                                     language="javascript"
                                     displayName="JS"
                                     value={js}

@@ -35,7 +35,6 @@ function Room() {
             const { data } = await getRoom(roomId);
             setRoom((prev) => data);
         };
-
         fetchRoom();
     }, [roomId]);
 
