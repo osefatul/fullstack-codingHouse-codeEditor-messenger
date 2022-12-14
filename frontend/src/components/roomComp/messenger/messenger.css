@@ -10,9 +10,9 @@
 .burger{
     z-index: 990;
     position: fixed;
-    top: 17%;
-    right: 14%;
-    font-size: 28px;
+    top: 5rem;
+    right: 16%;
+    font-size: 20px;
     display: flex;
     justify-content: flex-end;
     transition: all 0.5s ease-in-out;
@@ -44,9 +44,10 @@
 .messengerWrap h4{
     padding-top: 10px;
     background: #1D1D1D;
-    width: 100%;
+    /* width: 100%; */
     position: fixed;
     top: 4.45rem;
+    right: 5rem;
     z-index: 990;
     padding-bottom: 5px;
     color: greenyellow;
@@ -111,12 +112,12 @@
 } 
 
 
-@media  screen and (max-width:500px){
+@media screen and (max-width: 900px){
     .burger{
         z-index: 990;
         position: fixed;
-        top: 20%;
-        right: 34%;
+        top: 4.8rem;
+        right: 27%;
         font-size: 25px;
         display: flex;
         justify-content: flex-end;
@@ -124,6 +125,57 @@
         cursor: pointer;
         color: rgb(199, 19, 19);
         font-weight:800;
+    }
+    
+    .messengerWrap h4{
+        padding-top: 10px;
+        background: #1D1D1D;
+        /* width: 100%; */
+        position: fixed;
+        top: 4.45rem;
+        right: 6rem;
+        z-index: 990;
+        padding-bottom: 5px;
+        color: greenyellow;
+    }
+
+    .SendingTextWrapper .sendingText{
+        position: fixed !important;
+        bottom: 0%;
+        right: 1%;
+        border: 3px solid #164d9a;
+        width: 27%;
+        height: 10%;
+    }
+
+}
+
+@media  screen and (max-width:500px){
+    .burger{
+        z-index: 990;
+        position: fixed;
+        top: 5rem;
+        right: 30%;
+        font-size: 18px;
+        display: flex;
+        justify-content: flex-end;
+        transition: all 0.5s ease-in-out;
+        cursor: pointer;
+        color: rgb(199, 19, 19);
+        font-weight:800;
+    }
+
+    .messengerWrap h4{
+        padding-top: 10px;
+        background: #1D1D1D;
+        /* width: 100%; */
+        position: fixed;
+        top: 4.45rem;
+        right: 1.5rem;
+        z-index: 990;
+        padding-bottom: 5px;
+        color: greenyellow;
+        font-size: 13px;
     }
 
     .SendingTextWrapper .sendingText{
@@ -133,6 +185,10 @@
         border: 3px solid #164d9a;
         width: 34%;
         height: 10%;
-    } 
+    }
+
+    .text{
+        font-size: 10px;
+    }
     
 }

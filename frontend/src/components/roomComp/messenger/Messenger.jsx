@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import "./messenger.css"
 import {initChatSocket} from "../../../socket/chatSocket"
 import toast from 'react-hot-toast';
-import {BsThreeDotsVertical} from "react-icons/bs"
+import {BsXSquareFill} from "react-icons/bs"
 import { getRoom, updateRoom } from '../../../http';
 
 
@@ -103,12 +103,12 @@ return (
     <div className='topMessengerWrapper' >
 
         <p className="burger" onClick = {()=> setOpen(!open)}>
-            <BsThreeDotsVertical/>
+            <BsXSquareFill/>
         </p>
         
         <div className='messenger'>
             <div className='messengerWrap'>
-                <h4>Live Chat ...</h4>
+                <h4>Live Chat</h4>
                 <div className='conversation'>
 
                     {messages?.map((message) =>(
@@ -123,9 +123,7 @@ return (
                                 </p>
 
                                 <p className='text'
-                                ref={messageRef}
-                                
-                                >
+                                ref={messageRef}>
                                     {message?.message}
                                 </p>
 

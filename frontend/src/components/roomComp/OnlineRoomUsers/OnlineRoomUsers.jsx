@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useWebRTC } from '../../../hooks/useWebRTC';
 import { getRoom } from '../../../http';
 import styles from './onlineRoomUsers.module.css';
-import {BsThreeDotsVertical} from "react-icons/bs"
+import {BsXSquareFill, BsFillArrowLeftSquareFill} from "react-icons/bs"
 
 
 function OnlineRoomUsers({setOpen, open, room}) {
@@ -39,7 +39,7 @@ function OnlineRoomUsers({setOpen, open, room}) {
     <div className={styles.topRoom}>
 
         <p className={styles.burger} onClick = {()=> setOpen(!open)}>
-            <BsThreeDotsVertical/>
+            <BsXSquareFill/>
         </p>
     
         <div className={styles.room}>
@@ -47,7 +47,8 @@ function OnlineRoomUsers({setOpen, open, room}) {
                 <button 
                 onClick={handManualLeave} 
                 className={styles.goBack}>
-                    <img src="/images/arrow-left.png" alt="arrow-left" />
+                    {/* <img src="/images/arrow-left.png" alt="arrow-left" /> */}
+                    <BsFillArrowLeftSquareFill style={{color:"white", fontSize:"16px"}}/>
                     <span>Go back</span>
                 </button>
             </div>
