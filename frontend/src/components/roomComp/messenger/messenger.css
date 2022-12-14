@@ -19,6 +19,7 @@
     cursor: pointer;
     color: rgb(199, 19, 19);
     font-weight:bold;
+    background: #1D1D1D;
 }
 
 .messenger{
@@ -44,14 +45,17 @@
 .messengerWrap h4{
     padding-top: 10px;
     background: #1D1D1D;
-    /* width: 100%; */
+    width: 15%;
     position: fixed;
     top: 4.45rem;
-    right: 5rem;
-    z-index: 990;
+    padding-left: 1.5rem;
+    z-index: 950;
     padding-bottom: 5px;
     color: greenyellow;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
 }
 
 .conversation {
@@ -107,7 +111,7 @@
     bottom: 0%;
     right: 1%;
     border: 3px solid #164d9a;
-    width: 13%;
+    width: 16%;
     height: 10%;
 } 
 
@@ -130,13 +134,17 @@
     .messengerWrap h4{
         padding-top: 10px;
         background: #1D1D1D;
-        /* width: 100%; */
+        width: 24%;
         position: fixed;
         top: 4.45rem;
-        right: 6rem;
-        z-index: 990;
+        padding-left: 1rem;
+        z-index: 950;
         padding-bottom: 5px;
         color: greenyellow;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
     }
 
     .SendingTextWrapper .sendingText{
@@ -172,7 +180,7 @@
         position: fixed;
         top: 4.45rem;
         right: 1.5rem;
-        z-index: 990;
+        z-index: 950;
         padding-bottom: 5px;
         color: greenyellow;
         font-size: 13px;
@@ -190,5 +198,38 @@
     .text{
         font-size: 10px;
     }
+    
+}
+
+
+
+@media  screen and (max-width:350px){
+    .burger{
+        z-index: 990;
+        position: fixed;
+        top: 5rem;
+        right: 30%;
+        font-size: 15px;
+        display: flex;
+        justify-content: flex-end;
+        transition: all 0.5s ease-in-out;
+        cursor: pointer;
+        color: rgb(199, 19, 19);
+        font-weight:800;
+    }
+
+    .messengerWrap h4{
+        padding-top: 10px;
+        background: #1D1D1D;
+        /* width: 100%; */
+        position: fixed;
+        top: 4.45rem;
+        right: 1rem;
+        z-index: 950;
+        padding-bottom: 5px;
+        color: greenyellow;
+        font-size: 11px;
+    }
+
     
 }

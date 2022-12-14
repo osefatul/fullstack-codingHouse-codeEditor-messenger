@@ -52,9 +52,10 @@
     background: #1d1d1d;
     height: 70%;
     top: 8rem;
-    left: 0.6rem ;
+    left: 2rem ;
     z-index: 900;
     cursor: pointer;
+    font-size: 20px;
 }
 
 .closedRightSide{
@@ -62,9 +63,10 @@
     background: #1d1d1d;
     /* height: 100vh; */
     top: 8rem;
-    right: 0.6rem ;
+    right: 2rem ;
     z-index: 900;
     cursor: pointer;
+    font-size: 20px;
 }
 
 

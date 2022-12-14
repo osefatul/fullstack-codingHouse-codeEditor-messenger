@@ -115,23 +115,33 @@ right: -2px;
 
 .CodeMirror {
 height: calc(100vh - 92px);
-font-size: 20px;
+font-size: 15px;
 line-height: 1.6;
 padding-top: 20px;
 }
+
+
+
+/* Compiler */
+.compiler, .codes{
+display: flex;
+align-items: center;
+justify-content: center;
+background: #282A36;
+height: 100vh;
+}
+
+
 
 
 @media screen and (max-width: 600px) {
     .topWrapEditor{
         position: relative;
     }
-    
     .topWrapEditor .buttons{
         position: relative;
         width: 100%;
     }
-
-
 
     .editorContainer{
     display: flex;
@@ -155,6 +165,13 @@ padding-top: 20px;
     color: coral;
     gap: 20px;
     padding-bottom: 10px;
+    }
+
+    .CodeMirror {
+        height: calc(100vh - 92px);
+        font-size: 12px;
+        line-height: 1.6;
+        padding-top: 20px;
     }
     
 }

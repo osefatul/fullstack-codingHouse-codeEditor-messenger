@@ -9,8 +9,9 @@ const router = require('./routes');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
-
 const io = require('socket.io')(Server)
+
+
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -31,7 +32,6 @@ const corsOption = {
 app.use(cors(corsOption));
 
 const PORT = process.env.PORT || 8000;
-
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));

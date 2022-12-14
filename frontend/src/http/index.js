@@ -2,7 +2,7 @@ import axios from 'axios';
 const serverUrl = "http://localhost:5500"
 const codeEditorServerUrl = "http://localhost:5000"
 const socketServerUrl = "http://localhost:8000"
-
+const compilerUrl = "http://localhost:3500"
 
 
 
@@ -37,6 +37,16 @@ const codeEditorApi = axios.create({
     },
 });
 
+const compilerUrlApi = axios.create({
+    // baseURL: process.env.REACT_APP_API_URL,
+    baseURL: compilerUrl,
+    withCredentials: true, //use this for sending cookies
+    headers: {
+        'Content-type': 'application/json',
+        Accept: 'application/json',
+    },
+});
+
 
 
 // List of all the endpoints
@@ -55,6 +65,10 @@ export const updateXMLCode = (data) => codeEditorApi.put('/api/XMLCodes', data);
 export const updateCSSCode = (data) => codeEditorApi.put('/api/CSSCodes', data);
 export const updateJSCode = (data) => codeEditorApi.put('/api/JSCodes', data);
 export const getCodes = (roomId) => codeEditorApi.get(`/api/getAllCodes/${roomId}`)
+
+export const compileCode = (code) => compilerUrlApi.post(`/api/runCode`,code)
+
+
 
 
 

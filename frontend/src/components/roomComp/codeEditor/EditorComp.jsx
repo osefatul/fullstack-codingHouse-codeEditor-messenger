@@ -33,7 +33,7 @@ const EditorComp = ({language, value, setEditorState, socketRef, roomId, onCodeC
 
             if(language === "xml"){
 
-                console.log("this is xml:", language)
+                // console.log("this is xml:", language)
                 await socketRef.current.emit("XML_CODE_CHANGE", {
                 roomId,
                 code:value
@@ -43,7 +43,7 @@ const EditorComp = ({language, value, setEditorState, socketRef, roomId, onCodeC
             }
 
             else if(language === "css"){
-                console.log("this is css:", language)
+                // console.log("this is css:", language)
                 await socketRef.current.emit("CSS_CODE_CHANGE", {
                     roomId,
                     code:value
@@ -54,7 +54,7 @@ const EditorComp = ({language, value, setEditorState, socketRef, roomId, onCodeC
             }
 
             else {
-                console.log("this is js:", language)
+                // console.log("this is js:", language)
                 await socketRef.current.emit("JS_CODE_CHANGE", {
                     roomId,
                     code:value
@@ -73,21 +73,21 @@ const EditorComp = ({language, value, setEditorState, socketRef, roomId, onCodeC
             setEditorState(value);
 
             if( value && language === "xml"){
-                console.log("emitting or sending:", language)
+                // console.log("emitting or sending:", language)
                 await socketRef.current.emit("XML_CODE_CHANGE", {
                     roomId,
                     code:value
             });
             }
             else if(value && language === "css"){
-                console.log("emitting or sending:", language)
+                // console.log("emitting or sending:", language)
                 await socketRef?.current?.emit("CSS_CODE_CHANGE", {
                     roomId,
                     code:value
                 });
             }
             else if(value && language === "js") {
-                console.log("emitting or sending:", language)
+                // console.log("emitting or sending:", language)
                 await socketRef?.current?.emit("JS_CODE_CHANGE", {
                     roomId,
                     code:value
@@ -183,8 +183,6 @@ return (
             autoCloseBrackets: true, 
         }}
     />
-
-
 </div>
 )
 }

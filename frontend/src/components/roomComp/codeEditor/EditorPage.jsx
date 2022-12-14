@@ -13,6 +13,7 @@ import "./codeEditor.css"
 import { useSelector } from 'react-redux';
 import { getRoom } from '../../../http';
 import Preview from './Preview';
+import JSCompiler from './JSCompiler';
 
 
 
@@ -42,7 +43,7 @@ const EditorPage = () => {
     
     const fetchRoom = async () => {
         const { data } = await getRoom(roomId);
-        console.log(data)
+        // console.log(data)
         await setCodes((prev) => data.code[0]);
     };
 
@@ -51,7 +52,6 @@ const EditorPage = () => {
     }, [])
 
     useEffect(() => {
-        console.log(codes)
         setHtml(codes?.xml)
         setCss(codes?.css);
         setJs(codes?.js)
@@ -160,7 +160,14 @@ const EditorPage = () => {
                             backgroundColor={activeButton === "preview" ? "green" : ""}
                             title="Preview"
                             onClick={() => {
-                                onTabClick("Preview");
+                                onTabClick("preview");
+                            }}
+                            />
+                            <EditorButton
+                            backgroundColor={activeButton === "compiler" ? "green" : ""}
+                            title="Compiler"
+                            onClick={() => {
+                                onTabClick("compiler");
                             }}
                             />
                         </div>
@@ -198,8 +205,13 @@ const EditorPage = () => {
                                     onCodeChange={(code) => {
                                         JsCodeRef.current = code;
                                     }}/>
-                                ):(
+                                ): openedEditor === "preview" ? (
                                     <Preview
+                                    srcDoc={srcDoc}
+                                    />
+                                ): (
+                                    <JSCompiler
+                                    js={js}
                                     srcDoc={srcDoc}
                                     />
                                 )

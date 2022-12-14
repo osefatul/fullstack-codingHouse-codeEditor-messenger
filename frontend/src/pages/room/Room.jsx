@@ -20,7 +20,7 @@ function Room() {
     
     const fetchRoom = async () => {
         const { data } = await getRoom(roomId);
-        console.log(data)
+        // console.log(data)
         setRoom((prev) => data);
     };
 
