@@ -7,11 +7,10 @@ import styles from './onlineRoomUsers.module.css';
 import {BsThreeDotsVertical} from "react-icons/bs"
 
 
-function OnlineRoomUsers({setOpen, open, room, setRoom}) {
+function OnlineRoomUsers({setOpen, open, room}) {
 
     const user = useSelector((state) => state.auth.user);
     const [isMuted, setMuted] = useState(true);
-    // const [room, setRoom] = useState(null);
 
     const navigate = useNavigate();
     const { id: roomId } = useParams();

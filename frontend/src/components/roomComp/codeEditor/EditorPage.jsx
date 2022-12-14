@@ -12,18 +12,19 @@ import {
 import "./codeEditor.css"
 import { useSelector } from 'react-redux';
 import { getRoom } from '../../../http';
+import Preview from './Preview';
 
 
 
-const EditorPage = ({code, setRoom}) => {
+const EditorPage = () => {
 
-    const [codes, setCodes] = useState()
+    const user = useSelector((state) => state.auth.user);
+    const reactNavigator = useNavigate();
 
     const [openedEditor, setOpenedEditor] = useState("html");
     const [activeButton, setActiveButton] = useState("html");
-
     
-
+    const [codes, setCodes] = useState()
     const [html, setHtml] = useState("");
     const [css, setCss] = useState("");
     const [js, setJs] = useState("");
@@ -31,6 +32,11 @@ const EditorPage = ({code, setRoom}) => {
     const [srcDoc, setSrcDoc] = useState(``);
     const { id: roomId } = useParams();
 
+    // We use useRef hook to persist values between renders
+    const socketRef = useRef(null);
+    const htmlCodeRef = useRef(null);
+    const cssCodeRef = useRef(null);
+    const JsCodeRef = useRef(null);
 
     // ------------------------------
     
@@ -50,12 +56,8 @@ const EditorPage = ({code, setRoom}) => {
         setCss(codes?.css);
         setJs(codes?.js)
 
-    }, [codes, setCodes, roomId]);
+    }, [codes, setCodes, roomId,]);
     // ------------------------------
-
-
-    const user = useSelector((state) => state.auth.user);
-    // console.log(roomId)
 
 
     const onTabClick = (editorName) => {
@@ -63,6 +65,8 @@ const EditorPage = ({code, setRoom}) => {
         setActiveButton(editorName);
     };
 
+
+    //To Render code
     useEffect(() => {
     const timeOut = setTimeout(() => {
         setSrcDoc(
@@ -79,20 +83,10 @@ const EditorPage = ({code, setRoom}) => {
         return () => clearTimeout(timeOut)
     }, [html, css, js])
 
-    // We use useRef hook to persist values between renders
-    const socketRef = useRef(null);
 
 
-    const htmlCodeRef = useRef(null);
-    const cssCodeRef = useRef(null);
-    const JsCodeRef = useRef(null);
-
-
-    const reactNavigator = useNavigate();
-    
 
     useEffect(() => {
-
         const init = async ()=> {
             socketRef.current = await initSocket()
             // console.log(socketRef)
@@ -106,13 +100,11 @@ const EditorPage = ({code, setRoom}) => {
                 reactNavigator('/');
             }
 
-
             // Send roomId and user to server
             socketRef.current.emit("JOIN", {
                 roomId,
                 username: user?.name,
             });
-
 
             // Listening for joined event
             socketRef.current.on(
@@ -122,29 +114,11 @@ const EditorPage = ({code, setRoom}) => {
                         toast.success(`${username} joined the room.`);
                         console.log(`${username} joined`);
                     }
-                    
-                    //once you join the room sync codes in each tab.
-                    socketRef.current.emit("XML_SYNC_CODE", {
-                        code: htmlCodeRef.current,
-                        socketId,
-                    });
-
-                    socketRef.current.emit("CSS_SYNC_CODE", {
-                        code: cssCodeRef.current,
-                        socketId,
-                    });
-
-                    socketRef.current.emit("JS_SYNC_CODE", {
-                        code: JsCodeRef.current,
-                        socketId,
-                    });
                 }
             );
         }
         
         init()
-        console.log("start ")
-
 
         return () => {
             socketRef.current.disconnect();
@@ -157,7 +131,6 @@ const EditorPage = ({code, setRoom}) => {
 
     return (
         <div className="mainWrap">
-
             <div className='colsWrapper'>
                 <div className="editorWrap">
                     <div className='topWrapEditor'>
@@ -183,13 +156,19 @@ const EditorPage = ({code, setRoom}) => {
                                 onTabClick("js");
                             }}
                             />
+                            <EditorButton
+                            backgroundColor={activeButton === "preview" ? "green" : ""}
+                            title="Preview"
+                            onClick={() => {
+                                onTabClick("Preview");
+                            }}
+                            />
                         </div>
 
                         <div className='editors'>
                             {
                                 openedEditor === "html" ? (
                                     <EditorCom
-                                    dbValue={code?.xml}
                                     language="xml"
                                     value={html}
                                     setEditorState={setHtml}
@@ -200,7 +179,6 @@ const EditorPage = ({code, setRoom}) => {
                                     }}/>
                                 ): openedEditor === "css" ? (
                                     <EditorCom
-                                    dbValue={code?.css}
                                     language="css"
                                     value={css}
                                     setEditorState={setCss}
@@ -209,9 +187,8 @@ const EditorPage = ({code, setRoom}) => {
                                     onCodeChange={(code) => {
                                         cssCodeRef.current = code;
                                     }}/>
-                                    ) : (
+                                ): openedEditor === "js" ? (
                                     <EditorCom
-                                    dbValue={code?.js}
                                     language="javascript"
                                     displayName="JS"
                                     value={js}
@@ -221,25 +198,17 @@ const EditorPage = ({code, setRoom}) => {
                                     onCodeChange={(code) => {
                                         JsCodeRef.current = code;
                                     }}/>
-                            )}
-                            
+                                ):(
+                                    <Preview
+                                    srcDoc={srcDoc}
+                                    />
+                                )
+                            }
                         </div>
+
                     </div>
                 </div>
-                
-                <div className='iframe'>
-                        <iframe
-                            id="my_iframe"
-                            srcDoc={srcDoc}
-                            title="output"
-                            sandbox="allow-scripts"
-                            frameBorder="1"
-                            width="100%"
-                            height="100%"
-                        />
-                </div>
             </div>
-
         </div>
     );
 };

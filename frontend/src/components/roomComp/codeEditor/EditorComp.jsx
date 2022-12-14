@@ -15,11 +15,13 @@ import "./codeEditor.css"
 import { updateCSSCode, updateJSCode, updateXMLCode } from '../../../http';
 
 
-const EditorComp = ({dbValue, language, value, setEditorState, socketRef, roomId, onCodeChange  }) => {
+
+
+
+const EditorComp = ({language, value, setEditorState, socketRef, roomId, onCodeChange  }) => {
 
     const editorRef = useRef(null);
     const [theme, setTheme] = useState("dracula")
-    // const { id: roomId } = useParams();
     const themeArray = ['dracula', 'monokai', 'mdn-like', 'the-matrix', 'night']
 
 
@@ -64,33 +66,6 @@ const EditorComp = ({dbValue, language, value, setEditorState, socketRef, roomId
     }
 
 
-
-
-    useEffect(()=>{
-
-        if( value && language === "xml"){
-            setEditorState(dbValue?.xml)
-        }
-        async function init() {
-            // const {data} = await getCodes(roomId)
-            // console.log(data.code)
-            // if(language === "xml"){
-                
-            //     // onCodeChange(value);
-            //     // setEditorState(value);
-            // }
-
-            // else if(language === "css"){
-            //     const {data} = await getCodes(roomId)
-            // }
-
-            // else {
-            //     const {data} = await getCodes(roomId)
-            // }
-        }
-        init();
-    },[])
-
     useEffect(() => {
         async function init() {
 
@@ -98,21 +73,21 @@ const EditorComp = ({dbValue, language, value, setEditorState, socketRef, roomId
             setEditorState(value);
 
             if( value && language === "xml"){
-                console.log("this is xml:", language)
+                console.log("emitting or sending:", language)
                 await socketRef.current.emit("XML_CODE_CHANGE", {
                     roomId,
                     code:value
             });
             }
             else if(value && language === "css"){
-                console.log("this is css:", language)
+                console.log("emitting or sending:", language)
                 await socketRef?.current?.emit("CSS_CODE_CHANGE", {
                     roomId,
                     code:value
                 });
             }
             else if(value && language === "js") {
-                console.log("this is js:", language)
+                console.log("emitting or sending:", language)
                 await socketRef?.current?.emit("JS_CODE_CHANGE", {
                     roomId,
                     code:value
@@ -131,20 +106,16 @@ const EditorComp = ({dbValue, language, value, setEditorState, socketRef, roomId
             socketRef?.current.on("XML_CODE_CHANGE", ({ xml }) => {
                 console.log("receiving xml", xml)
                 if (xml)  {
-                    // setCode(serverCode);
-                    // editorRef.current.value = xml
                     onCodeChange(xml);
                     setEditorState(xml)
                 }
             });
         }
 
-
         else if( socketRef.current && language === "css"){
             socketRef?.current?.on("CSS_CODE_CHANGE", ({ css }) => {
-                console.log(css)
+                console.log("receiving css", css)
                 if (css)  {
-                    // editorRef.current.value = css
                     onCodeChange(css);
                     setEditorState(css)
                 }
@@ -154,9 +125,8 @@ const EditorComp = ({dbValue, language, value, setEditorState, socketRef, roomId
         else{
             socketRef?.current?.on("JS_CODE_CHANGE", 
             ({ js }) => {
-                console.log(js)
+                console.log("receiving js", js)
                 if (js)  {
-                    // editorRef.current.value = js
                     onCodeChange(js);
                     setEditorState(js)
                 }
@@ -178,9 +148,6 @@ const EditorComp = ({dbValue, language, value, setEditorState, socketRef, roomId
         };
 
     }, [socketRef.current, language, setEditorState]);
-
-    
-
 
 
 

@@ -6,21 +6,37 @@ import { useNavigate } from 'react-router-dom';
 const RoomCard = ({ room }) => {
     const history = useNavigate();
 
+    console.log(room)
 
     return (
         <div
-            onClick={() => {
-                history(`/room/${room.id}`);
-            }}
-            className={styles.card}
-        >
-            <h3 className={styles.topic}>{room.topic}</h3>
+            onClick={() => {history(`/room/${room.id}`);}}
+            className={styles.card}>
+            
+            <div className={styles.topicNImg}>
+                <h3 className={styles.topic}>
+                    {room.topic.length>50 ? 
+                    <div>{room.topic.split(0,50)}...</div>
+                    :room.topic}
+                </h3>
+                {
+                    room.roomType === "open"?
+                    <img 
+                    className={styles.roomType} 
+                    src="/images/globe.png" alt="globe" />:
+                    room.roomType === "private"?
+                    <img className={styles.roomType} 
+                    src="/images/lock.png" alt="lock" />:
+                    <img className={styles.roomType} 
+                    src="/images/social.png" alt="social" />
+                }
+            </div>
 
             <div
                 className={`${styles.speakers} ${
                     room.speakers.length === 1 ? styles.singleSpeaker : ''
-                }`}
-            >
+                }`}>
+
                 <div className={styles.avatars}>
                     {room.speakers.map((speaker) => (
                         <img

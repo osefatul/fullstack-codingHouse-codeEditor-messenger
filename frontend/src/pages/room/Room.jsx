@@ -17,7 +17,6 @@ function Room() {
     const [rightOpen, setRightOpen] = useState(true);
     const [room, setRoom] = useState(null);
 
-
     
     const fetchRoom = async () => {
         const { data } = await getRoom(roomId);
@@ -43,9 +42,9 @@ function Room() {
 return (
     <div className='room'>
 
-        {
+        {/* {
             leftOpen ?
-            <div className='leftSide'>
+            <div className={`leftSide ${leftOpen? "": "leftOpen"}`}>
                 <OnlineRoomUsers 
                 setOpen={setLeftOpen} 
                 open={leftOpen} 
@@ -57,16 +56,27 @@ return (
             <div className='closedLeftSide'>
                 <p onClick = {()=> setLeftOpen(!leftOpen)}><GiHamburgerMenu/></p>
             </div>
-        }
+        } */}
 
-
-        <div className='center'>
-            <EditorPage
-            code={room?.code[0]}
+        {/* if we use the above method then it will completely remove the tag from DOM. adn when room is removed from the dom then the user will be removed from audio call */}
+        
+        <div className={`leftSide ${leftOpen? "": "leftOpen"}`}>
+            <OnlineRoomUsers 
+            setOpen={setLeftOpen} 
+            open={leftOpen} 
+            room={room}
             setRoom={setRoom}
             />
         </div>
+        
+        <div className={`closedLeftSide ${leftOpen? "leftOpen": ""}`}>
+            <p onClick = {()=> setLeftOpen(!leftOpen)}><GiHamburgerMenu/></p>
+        </div>
+        
 
+        <div className='center'>
+            <EditorPage/>
+        </div>
 
         {
             rightOpen ?

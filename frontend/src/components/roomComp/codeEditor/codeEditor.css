@@ -1,10 +1,14 @@
 
 /* Editor page */
 .mainWrap {
-height: calc(100vh - 72px);
-overflow-y: hidden;
+height: calc(100vh - 80px);
+/* height: 100%; */
 width: 100%;
-overflow-x: hidden;
+}
+
+.editors{
+height: 100%;
+width: 100%;
 }
 
 .clientsList {
@@ -19,14 +23,13 @@ gap: 20px;
 display: flex;
 width: 100%;
 flex-direction: column;
-height: 100%;
+height: calc(100vh - 80px);
 position: relative;
 }
 
 .editorWrap{
 width: 100%;
-overflow-y: auto;
-height: 80%;
+height: 100%;
 }
 
 .topWrapEditor{
@@ -44,8 +47,8 @@ height: 80%;
 }
 
 .colsWrapper .iframe{
-background-color: gray ;
-height: 420px;
+background-color: rgb(250, 250, 245) ;
+height: calc(100vh - 82px);
 
 /* border-radius: 25px; */
 /* overflow-y: auto; */
@@ -59,12 +62,13 @@ justify-content: center;
 height: 30px;
 padding: 5px 0;
 background-color: #1D1D1D;
-gap: 20px;
+gap: 10px;
 }
 
 .editorContainer{
 display: flex;
 width: 100%;
+height: 100%;
 flex-direction: column;
 align-items: center;
 justify-content: center;
@@ -110,7 +114,7 @@ right: -2px;
 
 
 .CodeMirror {
-min-height: calc(100vh - 20px);
+height: calc(100vh - 92px);
 font-size: 20px;
 line-height: 1.6;
 padding-top: 20px;
@@ -124,34 +128,33 @@ padding-top: 20px;
     
     .topWrapEditor .buttons{
         position: relative;
-
         width: 100%;
-
     }
 
 
 
     .editorContainer{
-        display: flex;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        }
-        
-        .editorContainer .themes{
-        position: relative;
-        /* background-color: #282A36; */
-        top: 0rem;
-        z-index:900;
-        width: 100%;
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        color: coral;
-        gap: 20px;
-        padding-bottom: 10px;
-        }
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    }
+    
+    
+    .editorContainer .themes{
+    position: relative;
+    /* background-color: #282A36; */
+    top: 0rem;
+    z-index:900;
+    width: 100%;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    color: coral;
+    gap: 20px;
+    padding-bottom: 10px;
+    }
     
 }

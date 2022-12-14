@@ -11,14 +11,14 @@
     z-index: 990;
     position: fixed;
     top: 17%;
-    right: 15%;
-    font-size: 20px;
+    right: 14%;
+    font-size: 28px;
     display: flex;
     justify-content: flex-end;
     transition: all 0.5s ease-in-out;
     cursor: pointer;
-    color: rgb(224, 214, 25);
-    font-weight:800;
+    color: rgb(199, 19, 19);
+    font-weight:bold;
 }
 
 .messenger{
@@ -116,14 +116,23 @@
         z-index: 990;
         position: fixed;
         top: 20%;
-        right: 40%;
-        font-size: 20px;
+        right: 34%;
+        font-size: 25px;
         display: flex;
         justify-content: flex-end;
         transition: all 0.5s ease-in-out;
         cursor: pointer;
-        color: rgb(224, 214, 25);
+        color: rgb(199, 19, 19);
         font-weight:800;
     }
+
+    .SendingTextWrapper .sendingText{
+        position: fixed !important;
+        bottom: 0%;
+        right: 1%;
+        border: 3px solid #164d9a;
+        width: 34%;
+        height: 10%;
+    } 
     
 }
