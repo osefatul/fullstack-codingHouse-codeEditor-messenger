@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import EditorPage from '../../components/roomComp/codeEditor/EditorPage'
 import Messenger from '../../components/roomComp/messenger/Messenger';
@@ -11,7 +10,7 @@ import { getRoom } from '../../http';
 
 
 function Room() {
-    const user = useSelector((state) => state.auth.user);
+
     const { id: roomId } = useParams();
     const [leftOpen, setLeftOpen] = useState(true);
     const [rightOpen, setRightOpen] = useState(true);
