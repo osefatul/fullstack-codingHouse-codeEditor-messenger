@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const RoomCard = ({ room }) => {
     const history = useNavigate();
 
-    console.log(room)
+    // console.log(room)
 
     return (
         <div

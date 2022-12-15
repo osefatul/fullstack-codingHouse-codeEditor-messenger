@@ -6,10 +6,12 @@ import "./codeEditor.css"
 
 
 
-function JSCompiler({js}) {
+function JSCompiler({js, srcDoc}) {
 
     const [compiledCode, setCompiledCode] = useState()
     const [error, setError] = useState("")
+
+    console.log(srcDoc)
 
     useEffect(()=>{
         const callCompiler = async ()=>{

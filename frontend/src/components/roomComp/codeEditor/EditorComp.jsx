@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/dracula.css';
 import 'codemirror/theme/material.css';
@@ -10,9 +11,14 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/edit/closetag';
+import 'codemirror/addon/hint/javascript-hint'
+import "codemirror/addon/hint/show-hint.js";
+import "codemirror/addon/hint/show-hint.css";
+import "codemirror/addon/hint/xml-hint"
+import "codemirror/addon/hint/html-hint"
 import { Controlled as ControlledEditorComponent } from 'react-codemirror2';
-import "./codeEditor.css"
 import { updateCSSCode, updateJSCode, updateXMLCode } from '../../../http';
+import "./codeEditor.css"
 
 
 
@@ -27,9 +33,15 @@ const EditorComp = ({language, value, setEditorState, socketRef, roomId, onCodeC
 
     const handleChange = (editor, data, value,) => {
 
+        // This is for showing autocomplete
+        editor.showHint({ completeSingle: false });
+
         async function init() {
             onCodeChange(value);
             setEditorState(value);
+
+            // console.log(editor)
+            // console.log(data.text)
 
             if(language === "xml"){
 
@@ -176,12 +188,14 @@ return (
         options={{
             lineWrapping: true,
             lint: true,
-            mode: language,
+            mode: {name: language, globalVars: true},
+            // mode: language,
             lineNumbers: true,
             theme: theme,
             autoCloseTags: true,
-            autoCloseBrackets: true, 
+            // autoCloseBrackets: true, 
         }}
+
     />
 </div>
 )
