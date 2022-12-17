@@ -9,60 +9,83 @@ const UserDto = require('../dtos/userDto');
 
 class AuthController {
 
+    
+    // Login or Signup using Phone
     async sendOtp(req, res) {
-            const { phone } = req.body;
-            if (!phone) {
-                res.status(400).json({ message: 'Phone field is required!' });
-            }
+        const { phone, email } = req.body;
 
-            const otp = await otpService.generateOtp();
+        if (!phone && !email) {
+            res.status(400).json({ message: 'Field is required!' });
+        }
 
-            //time to leave
-            const ttl = 1000 * 60 * 2; // 2 min
-            const expires = Date.now() + ttl;
-            const data = `${phone}.${otp}.${expires}`;
-            const hash = hashService.hashOtp(data);
+        const otp = await otpService.generateOtp();
 
-            // send OTP
-            try {
+        //time to leave
+        const ttl = 1000 * 60 * 3; // 3 min
+        const expires = Date.now() + ttl;
+        
+        const data = phone ? `${phone}.${otp}.${expires}`: `${email}.${otp}.${expires}`;
+        const hash = hashService.hashOtp(data);
+
+        // send OTP
+        try {
             // await otpService.sendBySms(phone, otp);
+            phone ?
+            await otpService.sendBySms(phone, otp):
+            await otpService.sendByEmail(email, otp)
+
+            phone?
             res.json({
                 hash: `${hash}.${expires}`,
                 phone,
                 otp,
-            });
-                } catch (err) {
-                    console.log(err);
-                    res.status(500).json({ message: 'message sending failed' });
-                }
-    }
+            }) :
+            res.json({
+                hash: `${hash}.${expires}`,
+                email,
+                otp,
+            })
 
+        } 
+        catch (err) {
+            console.log(err);
+            res.status(500).json({ message: 'message sending failed' });
+        }
+    }
 
     async verifyOtp(req, res) {
 
-        const { otp, hash, phone } = req.body;
+        const { otp, hash, phone, email } = req.body;
 
-        if (!otp || !hash || !phone) {
-            res.status(400).json({ message: 'All fields are required!' });
-        }
+        console.log("verify body", req.body);
+
+        // if (!otp || !hash || !phone ) {
+        //     res.status(400).json({ message: 'All fields are required!' });
+        // }
 
         const [hashedOtp, expires] = hash.split('.');
         if (Date.now() > +expires) {
             res.status(400).json({ message: 'OTP expired!' });
         }
 
-        const data = `${phone}.${otp}.${expires}`;
+        const data = phone? `${phone}.${otp}.${expires}`: `${email}.${otp}.${expires}`
+
         const isValid = otpService.verifyOtp(hashedOtp, data);
         if (!isValid) {
             res.status(400).json({ message: 'Invalid OTP' });
         }
 
-
         let user;
         try {
-            user = await userService.findUser({ phone });
+            if(phone){
+                user = await userService.findUser({ phone });
+                if (!user) {
+                    user = await userService.createUser({ phone });
+                }
+            }
+            user = await userService.findUser({ email });
             if (!user) {
-                user = await userService.createUser({ phone });
+                user = await userService.createUser({ email });
             }
         } catch (err) {
             console.log(err);

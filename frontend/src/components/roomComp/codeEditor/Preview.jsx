@@ -3,7 +3,7 @@ import "./codeEditor.css"
 
 
 function Preview({srcDoc}) {
-
+    
 
 return (
     <div className="iframe">

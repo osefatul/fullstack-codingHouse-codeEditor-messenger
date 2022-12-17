@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const { emailProcessor } = require('./emailService');
 const hashService = require('./hashService');
 
 const smsSid = process.env.SMS_SID;
@@ -22,6 +23,14 @@ class OtpService {
             from: process.env.SMS_FROM_NUMBER,
             body: `Your codershouse OTP is ${otp}`,
         });
+    }
+
+    async sendByEmail(email, otp){
+        return await emailProcessor({
+            email: email,
+            type:"new-user-confirmation-required",
+            otp: otp
+        })
     }
 
     verifyOtp(hashedOtp, data) {

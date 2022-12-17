@@ -47,7 +47,7 @@ function App() {
         <Route path='/' element={<GuestRoutes/>}>
           <Route path="/" element={
               <>
-                <Navigation />
+                {/* <Navigation /> */}
                 <Home/>
               </>
             }/>
@@ -55,7 +55,7 @@ function App() {
 
           <Route path="authenticate" element={
             <>
-              <Navigation />
+              {/* <Navigation /> */}
               <Authenticate />
             </>
           }/>

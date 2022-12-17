@@ -79,41 +79,6 @@ const EditorComp = ({language, value, setEditorState, socketRef, roomId, onCodeC
 
 
     useEffect(() => {
-        async function init() {
-
-            onCodeChange(value);
-            setEditorState(value);
-
-            if( value && language === "xml"){
-                // console.log("emitting or sending:", language)
-                await socketRef.current.emit("XML_CODE_CHANGE", {
-                    roomId,
-                    code:value
-            });
-            }
-            else if(value && language === "css"){
-                // console.log("emitting or sending:", language)
-                await socketRef?.current?.emit("CSS_CODE_CHANGE", {
-                    roomId,
-                    code:value
-                });
-            }
-            else if(value && language === "js") {
-                // console.log("emitting or sending:", language)
-                await socketRef?.current?.emit("JS_CODE_CHANGE", {
-                    roomId,
-                    code:value
-                });
-            }
-        }
-
-        init();
-
-    }, [value, language, onCodeChange, setEditorState]);
-
-
-
-    useEffect(() => {
         if( socketRef?.current && language === "xml"){
             socketRef?.current.on("XML_CODE_CHANGE", ({ xml }) => {
                 console.log("receiving xml", xml)

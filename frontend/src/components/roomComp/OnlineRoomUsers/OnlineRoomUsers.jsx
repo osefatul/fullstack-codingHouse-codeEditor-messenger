@@ -4,8 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useWebRTC } from '../../../hooks/useWebRTC';
 import { getRoom } from '../../../http';
 import styles from './onlineRoomUsers.module.css';
-import {BsXSquareFill, BsFillArrowLeftSquareFill} from "react-icons/bs"
-
+import {BiArrowBack} from "react-icons/bi"
+import {BsXSquareFill} from "react-icons/bs"
 
 function OnlineRoomUsers({setOpen, open, room}) {
 
@@ -48,8 +48,9 @@ function OnlineRoomUsers({setOpen, open, room}) {
                 onClick={handManualLeave} 
                 className={styles.goBack}>
                     {/* <img src="/images/arrow-left.png" alt="arrow-left" /> */}
-                    <BsFillArrowLeftSquareFill style={{color:"white", fontSize:"16px"}}/>
-                    <span>Go back</span>
+                    <BiArrowBack style={{color:"white", fontSize:"20px",}}/>
+                    {/* <img src="/images/back.png" alt="" /> */}
+                    {/* <span>Go back</span> */}
                 </button>
             </div>
 

@@ -25,9 +25,8 @@ function Home() {
         <div className={styles.cardWrapper}>
             <Card title="Welcome to Codershouse!" icon="logo">
                 <p className={styles.text}>
-                    We’re working hard to get Codershouse ready for everyone!
-                    While we wrap up the finishing youches, we’re adding people
-                    gradually to make sure nothing breaks
+                    We’re working hard to get Coding house ready for everyone!
+                    Coding house is a community of software developers, aspirants, teachers and students to get together and share their skills.
                 </p>
                 <div>
                     <Button onClick={startRegister} text="Let's Go" />

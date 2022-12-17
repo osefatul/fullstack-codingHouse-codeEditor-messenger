@@ -4,14 +4,13 @@ import Email from './email/Email';
 import styles from './stepPhoneEmail.module.css';
 
 const phoneEmailMap = {
-    phone: Phone,
     email: Email,
+    phone: Phone,
 };
 
 const StepPhoneEmail = ({ onNext }) => {
-    const [type, setType] = useState('phone');
+    const [type, setType] = useState('email');
     const Component = phoneEmailMap[type];
-
 
 
     return (

@@ -3,12 +3,7 @@ import toast from 'react-hot-toast';
 import EditorCom from './EditorComp';
 import { initSocket } from '../../../socket/editorSocket';
 import EditorButton from '../../shared/editorButton/EditorButton';
-import {
-    useLocation,
-    useNavigate,
-    Navigate,
-    useParams,
-} from 'react-router-dom';
+import {useNavigate,useParams,} from 'react-router-dom';
 import "./codeEditor.css"
 import { useSelector } from 'react-redux';
 import { getRoom } from '../../../http';

@@ -15,18 +15,28 @@ const StepOtp = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { phone, hash } = useSelector((state) => state.auth.otp);
+    const { phone, hash, email } = useSelector((state) => state.auth.otp);
     
     async function submit() {
         try {
             // empty return mean go no further in the function
-            if (!otp || !phone || !hash) return;
+            // if (!otp || !phone || !hash || !email) return;
 
-            const { data } = await verifyOtp({ otp, phone, hash });
-            console.log(data)
-            dispatch(setAuth(data));
-            if(data){
-                navigate("/activate")
+            if(phone){             
+                const { data } = await verifyOtp({ otp, phone, hash });
+                console.log(data)
+                dispatch(setAuth(data));
+                if(data){
+                    navigate("/activate")
+            }}
+
+            else{
+                const { data } = await verifyOtp({ otp, email, hash });
+                console.log(data)
+                dispatch(setAuth(data));
+                if(data){
+                    navigate("/activate")
+                }
             }
 
         } catch (err) {
