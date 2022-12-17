@@ -1,0 +1,94 @@
+version: '3'
+services:
+  frontend:
+    build:
+      dockerfile: Dockerfile.prod
+      context: ./
+    container_name: frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - ./deploy/default.conf:/etc/nginx/sites-available/default
+      - /var/certs/etc-letsencrypt:/etc/letsencrypt
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - coding-editor-microservice
+      - compiler-microservice
+      - messenger-microservice
+      - webrtc-microservice
+      - mongdb
+  mongdb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27107:27017"
+    volumes:
+      - mongodb:/data/db 
+  coding-editor-microservice:
+    build:
+      dockerfile: Dockerfile.prod
+      context: ./coding-editor-microservice/
+    container_name: coding-editor-microservice
+    restart: always
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./coding-editor-microservice/.env
+    volumes:
+      - ./coding-editor-microservice:/coding-editor-microservice
+      - /coding-editor-microservice/node_modules
+    depends_on:
+      - mongdb
+  compiler-microservice:
+    build:
+      dockerfile: Dockerfile.prod
+      context: ./compiler-microservice/
+    container_name: compiler-microservice
+    restart: always
+    ports:
+      - "3500:3500"
+    env_file:
+      - ./compiler-microservice/.env
+    volumes:
+      - ./compiler-microservice:/compiler-microservice
+      - /compiler-microservice/node_modules
+    depends_on:
+      - mongdb
+  messenger-microservice:
+    build:
+      dockerfile: Dockerfile.prod
+      context: ./messenger-microservice/
+    container_name: messenger-microservice
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./messenger-microservice/.env
+    volumes:
+      - ./messenger-microservice:/messenger-microservice
+      - /messenger-microservice/node_modules
+    depends_on:
+      - mongdb
+  webrtc-microservice:
+    build:
+      dockerfile: Dockerfile.prod
+      context: ./webrtc-microservice/
+    container_name: webrtc-microservice
+    restart: always
+    ports:
+      - "5500:5500"
+    env_file:
+      - ./webrtc-microservice/.env
+    volumes:
+      - ./webrtc-microservice:/webrtc-microservice
+      - /webrtc-microservice/node_modules
+    depends_on:
+      - mongdb
+
+volumes:
+  mongodb:

@@ -18,10 +18,12 @@ const Email = ({ onNext }) => {
 
     async function submit() {
         const { data } = await sendOtp({ email:email });
-        console.log(data);
+        // console.log(data);
         dispatch(setOtp({ email: data.email, hash: data.hash }));
         onNext();
     }
+
+    
     return (
         <Card title="Enter your email:" icon="email-emoji">
             <TextInput

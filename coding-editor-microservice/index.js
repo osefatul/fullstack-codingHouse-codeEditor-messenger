@@ -50,7 +50,6 @@ mongoDb.connect(process.env.MONGO_URL).then(
 
 
 
-
 //SOCKET FUNCTIONALITIES
 
 const userSocketMap = {};
