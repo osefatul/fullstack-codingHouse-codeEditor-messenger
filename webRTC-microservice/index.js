@@ -13,7 +13,7 @@ const server = require("http").createServer(app);
 const io = require('socket.io')(server);
     
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Origin", process.env.FRONT_URL);
     res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept");
@@ -25,7 +25,7 @@ app.use(function (req, res, next) {
 app.use(cookieParser());
 const corsOption = {
     credentials: true,
-    origin: ['http://localhost:3000'],
+    origin: [process.env.FRONT_URL],
 };
 
 

@@ -14,7 +14,7 @@ const io = require('socket.io')(Server)
 
 
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Origin", process.env.FRONT_URL);
     res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept");
@@ -26,12 +26,12 @@ app.use(function (req, res, next) {
 app.use(cookieParser());
 const corsOption = {
     credentials: true,
-    origin: ['http://localhost:3000'],
+    origin: [process.env.FRONT_URL]
 };
 
 app.use(cors(corsOption));
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.BASE_URL || 8000;
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));

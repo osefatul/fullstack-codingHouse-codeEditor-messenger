@@ -1,8 +1,13 @@
 import axios from 'axios';
-const serverUrl = "http://localhost:5500"
-const codeEditorServerUrl = "http://localhost:5000"
-const socketServerUrl = "http://localhost:8000"
-const compilerUrl = "http://localhost:3500"
+// const serverUrl = "http://localhost:5500"
+// const codeEditorServerUrl = "http://localhost:5000"
+// const socketServerUrl = "http://localhost:8000"
+// const compilerUrl = "http://localhost:3500"
+
+const serverUrl = process.env.REACT_APP_WEB_RTC
+const codeEditorServerUrl = process.env.REACT_APP_CODE_EDITOR
+const socketServerUrl = process.env.REACT_APP_SOCKET_SERVER_URL
+const compilerUrl = process.env.REACT_APP_COMPILER
 
 
 

@@ -29,6 +29,7 @@ class AuthController {
 
         // send OTP
         try {
+            // await otpService.sendBySms(phone, otp);
             phone ?
             await otpService.sendBySms(phone, otp):
             await otpService.sendByEmail(email, otp)

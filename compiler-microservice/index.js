@@ -12,18 +12,18 @@ const {executeCpp} = require("./executeCpp")
 
 
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept");
-        res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-        next();
-});
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", process.env.FRONT_URL);
+//     res.header(
+//         "Access-Control-Allow-Headers",
+//         "Origin, X-Requested-With, Content-Type, Accept");
+//         res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+//         next();
+// });
     
 const corsOption = {
 credentials: true,
-origin: ['http://localhost:3000'],
+origin: [process.env.FRONT_URL],
 };
 
 app.use(cors(corsOption));
@@ -60,7 +60,7 @@ app.post("/api/runCode/", async(req, res) => {
     }
 })
 
-const PORT = process.env.PORT || 3500;    
+const PORT =process.env.BASE_URL||3500;    
 
 app.listen(PORT, ()=>{
     console.log("Server listening on", PORT)

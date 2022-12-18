@@ -1,7 +1,5 @@
-require('dotenv').config();
-
-
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -15,7 +13,6 @@ const transporter = nodemailer.createTransport({
         rejectUnauthorized: false
     }
 })
-
 
 const send = (info) => {
     return new Promise(async (resolve, reject) => {
