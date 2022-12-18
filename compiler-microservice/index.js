@@ -60,7 +60,7 @@ app.post("/api/runCode/", async(req, res) => {
     }
 })
 
-const PORT =process.env.BASE_URL||3500;    
+const PORT =process.env.PORT||3500;    
 
 app.listen(PORT, ()=>{
     console.log("Server listening on", PORT)
