@@ -9,12 +9,14 @@ const userSchema = new Schema(
         avatar: {
             type: String,
             required: false,
-            get: (avatar) => {
-                if (avatar) {
-                    return `${process.env.BASE_URL}${avatar}`;
-                }
-                return avatar;
-            },
+
+            //used Only for local storage...
+            // get: (avatar) => {
+            //     if (avatar) {
+            //         return `${process.env.BASE_URL}${avatar}`;
+            //     }
+            //     return avatar;
+            // },
         },
         activated: { type: Boolean, required: false, default: false },
     },

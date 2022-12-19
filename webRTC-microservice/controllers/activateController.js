@@ -13,32 +13,33 @@ class ActivateController {
             res.status(400).json({ message: 'All fields are required!' });
         }
 
+
+        //UPLOADING PICTURE LOCALLY ...
         // Image Base64
-        const extension = avatar.split("/")[1].split(";")[0] //get extension from image base64
-        const buffer = Buffer.from(
-            // avatar.replace(/^data:image\/png;base64,/, ''),
-            avatar.replace(`data:image/${extension};base64,`, ''),
-            'base64'
-        );
+        // const extension = avatar.split("/")[1].split(";")[0] //get extension from image base64
+        // const buffer = Buffer.from(
+        //     // avatar.replace(/^data:image\/png;base64,/, ''),
+        //     avatar.replace(`data:image/${extension};base64,`, ''),
+        //     'base64'
+        // );
 
 
-        const imagePath = `${Date.now()}-${Math.round(
-            Math.random() * 1e9
-        )}.${extension}`;
-        // 32478362874-3242342342343432.png
+        // const imagePath = `${Date.now()}-${Math.round(
+        //     Math.random() * 1e9
+        // )}.${extension}`;
+        // // 32478362874-3242342342343432.png
 
 
-        try {
-            const jimResp = await Jimp.read(buffer);
-            // console.log("jimResp", jimResp);
+        // try {
+        //     const jimResp = await Jimp.read(buffer);
+        //     // console.log("jimResp", jimResp);
 
-            jimResp
-                .resize(150, Jimp.AUTO)
-                .write(path.resolve(__dirname, `../storage/${imagePath}`));
-        } catch (err) {
-            res.status(500).json({ message: 'Could not process the image' });
-        }
-
+        //     jimResp
+        //         .resize(150, Jimp.AUTO)
+        //         .write(path.resolve(__dirname, `../storage/${imagePath}`));
+        // } catch (err) {
+        //     res.status(500).json({ message: 'Could not process the image' });
+        // }
 
         const userId = req.user._id;
         // Update user
@@ -47,9 +48,10 @@ class ActivateController {
             if (!user) {
                 res.status(404).json({ message: 'User not found!' });
             }
+            // user.avatar = `/storage/${imagePath}`; //used for local storage
             user.activated = true;
             user.name = name;
-            user.avatar = `/storage/${imagePath}`;
+            user.avatar = avatar;
             user.save();
             res.json({ user: new UserDto(user), auth: true });
         } catch (err) {

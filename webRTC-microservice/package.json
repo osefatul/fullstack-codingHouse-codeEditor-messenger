@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "webrtc-microservice",
   "version": "1.0.0",
   "description": "This is backend directory for codershouse",
   "main": "index.js",
@@ -17,9 +17,7 @@
     "mongoose": "^5.13.3",
     "nodemailer": "^6.8.0",
     "socket.io": "^4.5.4",
-    "twilio": "^3.66.0"
-  },
-  "devDependencies": {
+    "twilio": "^3.66.0",
     "nodemon": "^2.0.20"
   },
   "author": "Omar",

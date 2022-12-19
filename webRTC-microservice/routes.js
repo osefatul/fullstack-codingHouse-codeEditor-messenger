@@ -4,6 +4,7 @@ const authController = require('./controllers/authController');
 const activateController = require('./controllers/activateController');
 const authMiddleware = require('./middlewares/authMiddleware');
 const roomsController = require('./controllers/roomsController');
+const userController = require('./controllers/userController');
 
 router.post('/api/send-otp', authController.sendOtp);
 router.post('/api/verify-otp', authController.verifyOtp);
@@ -15,6 +16,7 @@ router.get('/api/editorRoom/:roomId', authMiddleware, roomsController.show);
 router.get('/api/rooms/:userId', authMiddleware, roomsController.index);
 router.get('/api/specificRooms/:userId', authMiddleware, roomsController.roomTypes);
 router.get('/api/test', (req, res) => res.json({ msg: 'OK' }));
+router.put("/api/update", userController.updateAvatar)
 
 
 module.exports = router;

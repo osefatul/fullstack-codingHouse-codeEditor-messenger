@@ -15,7 +15,7 @@ function SemiProtectRoutes({ children }){
         {
             !isAuth?
             <Navigate to="/" state={{from:location}} replace/>
-            : isAuth && !user.activated ?
+            : isAuth && !user?.activated ?
             <main>
                 <Outlet/>
             </main>:

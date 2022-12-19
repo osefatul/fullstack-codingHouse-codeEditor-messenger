@@ -42,8 +42,8 @@ const Navigation = () => {
                         <img
                             className={styles.avatar}
                             src={
-                                user.avatar
-                                    ? user.avatar
+                                user?.avatar
+                                    ? user?.avatar
                                     : '/images/monkey-avatar.png'
                             }
 
