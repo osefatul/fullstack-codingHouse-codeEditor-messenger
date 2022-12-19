@@ -8,7 +8,7 @@ export const initChatSocket = async () => {
         timeout: 10000,
         transports: ['websocket'],
     };
+    // return io("http://localhost:8000", options);
     // return io(process.env.REACT_APP_BACKEND_URL, options);
     return io("https://codeeditor-messenger-micro.herokuapp.com", options);
-    // return io("http://localhost:8000", options);
 };

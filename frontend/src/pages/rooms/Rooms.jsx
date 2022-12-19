@@ -95,10 +95,14 @@ const Rooms = () => {
 
 
     const fetchRooms = async () => {
-        const { data } = await getAllRooms({userId: user?.id});
-        setRooms(data);
-        setData(data)
-        // console.log(data)
+        try{
+            const { data } = await getAllRooms({userId: user?.id});
+            setRooms(data);
+            setData(data)
+            console.log(data)
+        }catch(e){
+            console.log(e)
+        }
     };
 
     useEffect(() => {

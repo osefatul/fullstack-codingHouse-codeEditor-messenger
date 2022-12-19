@@ -11,6 +11,7 @@ class AuthController {
     
     // Login or Signup using Phone
     async sendOtp(req, res) {
+
         const { phone, email } = req.body;
 
         if (!phone && !email) {
@@ -55,7 +56,7 @@ class AuthController {
 
     async verifyOtp(req, res) {
         const { otp, hash, phone, email } = req.body;
-        // console.log("verify body", req.body);
+        console.log("verify body", req.body);
         // if (!otp || !hash || !phone ) {
         //     res.status(400).json({ message: 'All fields are required!' });
         // }
@@ -89,26 +90,33 @@ class AuthController {
             res.status(500).json({ message: 'Db error' });
         }
 
-        const { accessToken, refreshToken } = tokenService.generateTokens({
-            _id: user._id,
+        const { accessToken, refreshToken } = await tokenService.generateTokens({
+            _id: user?._id,
             activated: false,
         });
 
-        await tokenService.storeRefreshToken(refreshToken, user._id);
+        await tokenService.storeRefreshToken(refreshToken, user?._id);
 
         res.cookie('refreshToken', refreshToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             httpOnly: true,
+            sameSite: 'none',
+            secure: true,
+            
         });
 
         res.cookie('accessToken', accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             httpOnly: true,
+            sameSite: 'none',
+            secure: true,
         });
 
         const userDto = new UserDto(user);
         res.json({ user: userDto, auth: true });
     }
+
+
 
     // refresh token
     async refresh(req, res) {
@@ -145,7 +153,7 @@ class AuthController {
         }
         
         //5. Generate new tokens
-        const { refreshToken, accessToken } = tokenService.generateTokens({
+        const { refreshToken, accessToken } = await tokenService.generateTokens({
             _id: userData._id,
         });
 
@@ -160,12 +168,16 @@ class AuthController {
         res.cookie('refreshToken', refreshToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             httpOnly: true,
+            sameSite: 'none',
+            secure: true,
         });
 
         //8. put in cookie
         res.cookie('accessToken', accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             httpOnly: true,
+            sameSite: 'none',
+            secure: true,
         });
         
         //9. send response to user

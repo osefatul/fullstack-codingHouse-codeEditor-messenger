@@ -8,7 +8,9 @@ const socketInit = () => {
         transports: ['websocket'],
     };
     // return io(process.env.REACT_APP_SOCKET_SERVER_URL, options);
-    return io("http://localhost:5500", options);
+    // return io("http://localhost:5500", options);
+    return io("https://codeeditor-webrtc-microservice.herokuapp.com", options);
+    
 
 };
 

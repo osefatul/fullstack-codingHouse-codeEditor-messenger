@@ -8,14 +8,15 @@ import { setAuth } from '../features/authSlice';
 
 export function useLoadingWithRefresh() {
 
-
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
+    
     useEffect(() => {
         (async () => {
             try {
                 const { data } = await axios.get(
-                    `http://localhost:5500/api/refresh`,
+                    // `http://localhost:5500/api/refresh`,
+                    `https://codeeditor-webrtc-microservice.herokuapp.com/api/refresh`,
                     // `${process.env.REACT_APP_WEB_RTC}/api/refresh`,
                     {
                         withCredentials: true,
