@@ -6,7 +6,6 @@ const UserDto = require('../dtos/userDto');
 
 
 
-
 class AuthController {
 
     
@@ -53,12 +52,10 @@ class AuthController {
         }
     }
 
+
     async verifyOtp(req, res) {
-
         const { otp, hash, phone, email } = req.body;
-
-        console.log("verify body", req.body);
-
+        // console.log("verify body", req.body);
         // if (!otp || !hash || !phone ) {
         //     res.status(400).json({ message: 'All fields are required!' });
         // }
@@ -113,7 +110,7 @@ class AuthController {
         res.json({ user: userDto, auth: true });
     }
 
-
+    // refresh token
     async refresh(req, res) {
         //1. get refresh token from cookie
         const { refreshToken: refreshTokenFromCookie } = req.cookies;
@@ -141,7 +138,7 @@ class AuthController {
             return res.status(500).json({ message: 'Internal error' });
         }
 
-        //4. check if valid user
+        //4. check if user is valid
         const user = await userService.findUser({ _id: userData._id });
         if (!user) {
             return res.status(404).json({ message: 'No user' });

@@ -38,26 +38,6 @@ const StepAvatar = ({ onNext }) => {
         //     setImage(reader.result);
         //     dispatch(setAvatar(reader.result));
         // };
-
-        const data = new FormData();
-        try{
-            setFile(e.target.files[0])
-            if(file){
-                data.append("file", file);
-                data.append("upload_preset", "coding-house")
-
-                const uploadPic = await axios.post(
-                "https://api.cloudinary.com/v1_1/ddgn3r0t2/image/upload",
-                data, 
-                axios.defaults.withCredentials = false
-                )
-
-                const {url} = uploadPic.data;
-                dispatch(setAvatar(url));
-            }
-        }catch(e){
-            console.log(e)
-        }
     }
 
 
@@ -77,17 +57,18 @@ const StepAvatar = ({ onNext }) => {
 
             const {url} = uploadPic.data;
             dispatch(setAvatar(url));
-            console.log(url)
+            // console.log(url)
             
         }catch(e){
             console.log(e)
         }
 
         // if (!name || !avatar) return;
-        // setLoading(true);
+        setLoading(true);
 
         try {
             if(avatar){
+                setLoading(false);
                 const { data } = await activate({ name, avatar });
                 data.auth && data.user.activated && dispatch(setAuth(data));
             }

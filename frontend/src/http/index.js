@@ -14,7 +14,7 @@ const serverUrl = "http://localhost:5500"
 
 //netlify upload
 // const serverUrl = "https://codeeditor-webrtc-microservice.herokuapp.com"
-const codeEditorServerUrl = "https://codeeditor-compiler.herokuapp.com"
+const codeEditorServerUrl = "https://coding-editor-microservice.herokuapp.com"
 const socketServerUrl = "https://codeeditor-messenger-micro.herokuapp.com"
 const compilerUrl = "https://codeeditor-compiler.herokuapp.com"
 

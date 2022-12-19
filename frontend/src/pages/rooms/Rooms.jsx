@@ -98,7 +98,7 @@ const Rooms = () => {
         const { data } = await getAllRooms({userId: user?.id});
         setRooms(data);
         setData(data)
-        console.log(data)
+        // console.log(data)
     };
 
     useEffect(() => {
