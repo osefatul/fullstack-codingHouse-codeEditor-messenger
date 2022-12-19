@@ -5,6 +5,7 @@ class RoomsController {
     
     async XMLcodes(req, res) {
         console.log(req.body)
+        
         const updateRoom = await RoomModel.findByIdAndUpdate(
             {_id: req.body.roomId},
             {
