@@ -102,7 +102,6 @@ class AuthController {
             httpOnly: true,
             sameSite: 'none',
             secure: true,
-            
         });
 
         res.cookie('accessToken', accessToken, {

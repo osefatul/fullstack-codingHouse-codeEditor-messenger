@@ -35,11 +35,11 @@ class RoomsController {
 
         //Filtered those private rooms from users that did not belong to them
         const filteredRooms = allRooms.filter( room => {
-            if(room.roomType === "private"  && room.ownerId.id === req.params.userId){
+            if(room?.roomType === "private"  && room?.ownerId?.id === req?.params.userId){
                 return room
             }
             
-            if(room.roomType === 'open'){
+            if(room?.roomType === 'open'){
                 return room
             }
             

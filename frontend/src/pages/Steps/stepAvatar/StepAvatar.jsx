@@ -56,17 +56,18 @@ const StepAvatar = ({ onNext }) => {
             )
 
             const {url} = uploadPic.data;
-            dispatch(setAvatar(url));
-            // console.log(url)
+            const newUrl = url.replace("http", "https");
+            await dispatch(setAvatar(newUrl));
+            console.log(url)
             
         }catch(e){
             console.log(e)
         }
 
         // if (!name || !avatar) return;
-        setLoading(true);
-
+        
         try {
+            setLoading(true);
             if(avatar){
                 setLoading(false);
                 const { data } = await activate({ name, avatar });
